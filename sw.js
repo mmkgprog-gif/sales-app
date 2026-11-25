@@ -1,4 +1,4 @@
-const CACHE = 'sales-app-v4';
+const CACHE = 'sales-app-v5';
 const FILES = ['./', 'index.html', 'manifest.json', 'icon.svg'];
 
 self.addEventListener('install', e => {

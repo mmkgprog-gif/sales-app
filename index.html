@@ -109,7 +109,7 @@
 <script>
 // ============ الإعدادات ============
 // حط هنا لينك Apps Script (Web app URL)
-const API_URL = 'https://script.google.com/macros/s/AKfycbzvmeM6KplSRTnZWwAprfvUAIbQsHzUSa1PK2fBClACk3_k_4f3EjR6Ya4FnqJoQLHxgw/exec';
+const API_URL = 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
 
 // ============ أدوات ============
 const $ = s => document.querySelector(s);
@@ -234,13 +234,24 @@ async function refreshAll() {
       return;
     }
     data = b; store.set('data', data);
-    if (me.role === 'accountant' || me.role === 'supervisor') {
-      const r = await api('reports');
-      if (r.ok) { reports = r; store.set('reports', reports); }
-    }
-  } catch {}
+    if (me.role === 'accountant' || me.role === 'supervisor') await loadReports();
+  } catch (err) {
+    $('#loginMsg').textContent = 'مفيش اتصال بالسيرفر: ' + err.message;
+  }
   render();
   updateNet();
+}
+
+// تحميل التقارير، ولو فيه خطأ بيتعرض للمستخدم بدل ما الصفحة تفضل "جاري التحميل"
+let reportsErr = '';
+async function loadReports() {
+  try {
+    const r = await api('reports');
+    if (r.ok) { reports = r; reportsErr = ''; store.set('reports', reports); }
+    else reportsErr = r.error || 'خطأ غير معروف';
+  } catch (err) {
+    reportsErr = 'مفيش اتصال بالسيرفر: ' + err.message;
+  }
 }
 
 // ============ رسم الصفحة ============
@@ -260,7 +271,13 @@ function render() {
   if (!data) { $('#view').innerHTML = '<p class="hint">جاري التحميل...</p>'; return; }
   const needsReports = ['rep_report','stores','debts','sup_sales','sup_stock','sup_target','sup_purch','sup_main','sup_debts','count','loads','purch','cash'].includes(page);
   if (needsReports && !reports && me.role !== 'rep') {
+    if (reportsErr) {
+      $('#view').innerHTML = `<div class="card"><p class="msg">تعذر تحميل التقارير: ${esc(reportsErr)}</p>
+        <button data-act="retryReports">إعادة المحاولة</button></div>`;
+      return;
+    }
     $('#view').innerHTML = '<p class="hint">جاري تحميل التقارير...</p>';
+    loadReports().then(render);
     return;
   }
   $('#view').innerHTML = fn();
@@ -841,6 +858,7 @@ document.addEventListener('click', async e => {
     $('#modal').classList.remove('hidden');
   }
   if (a === 'closeModal') $('#modal').classList.add('hidden');
+  if (a === 'retryReports') { act.disabled = true; await loadReports(); render(); }
   if (a === 'saveCount') await saveCount();
   if (a === 'addLine') { $('#lines').insertAdjacentHTML('beforeend', lineHtml(0)); }
   if (a === 'delLine') {

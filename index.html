@@ -89,7 +89,10 @@
   <section id="p-home" class="page hidden">
     <div class="card">
       <h2>الشاشة الرئيسية</h2>
-      <div class="tw" id="homeTable"></div>
+      <label>اختار الشيت
+        <select id="viewSel"></select>
+      </label>
+      <div class="tw" id="viewBox"></div>
       <p class="hint" id="homeStamp"></p>
       <button class="secondary" id="refreshHome">تحديث</button>
     </div>
@@ -254,7 +257,7 @@
 <script>
 // ============ الإعدادات ============
 // حط هنا لينك الـ Web App بتاع Apps Script
-const API_URL = 'https://script.google.com/macros/s/AKfycbwHY2nt9KWabZ_HztBu4_isYPJ_qTLYpTUNLkbQ94FFojMkwwb__yDFOWRgHQJKKRZfkg/exec';
+const API_URL = 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
 
 // ============ أدوات ============
 const $ = s => document.querySelector(s);
@@ -393,7 +396,7 @@ $('#logoutBtn').addEventListener('click', () => {
 });
 
 // ============ الشاشة الرئيسية ============
-function renderHome() {
+function renderHomeSummary() {
   const h = data?.home;
   if (!h) { $('#homeTable').innerHTML = '<p class="hint">مفيش بيانات بعد</p>'; return; }
   const cell = (v, i) => {
@@ -413,6 +416,29 @@ function renderHome() {
   $('#homeStamp').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG');
 }
 
+// عرض أي شيت من الملف كجدول
+async function renderHome() {
+  if (!data || !me || (me.role !== 'manager' && me.role !== 'accountant')) return;
+  const names = data.sheets || [];
+  const sel = $('#viewSel');
+  const keep = sel.value;
+  sel.innerHTML = names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
+  if (keep && names.includes(keep)) sel.value = keep;
+  if (sel.value) await loadSheetView(sel.value);
+}
+
+async function loadSheetView(name) {
+  $('#viewBox').innerHTML = '<p class="hint">جاري التحميل...</p>';
+  const res = await api('sheetView', { name });
+  if (!res.ok) { $('#viewBox').innerHTML = `<p class="msg">${esc(res.error)}</p>`; return; }
+  if (!res.rows.length) { $('#viewBox').innerHTML = '<p class="hint">الشيت ده فاضي</p>'; return; }
+  $('#viewBox').innerHTML =
+    `<div class="tw"><table>${res.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</table></div>` +
+    (res.truncated ? `<p class="hint">بيتعرض أول ${res.rowCount} صف وأول 25 عمود بس.</p>` : '');
+  $('#homeStamp').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG');
+}
+
+$('#viewSel').addEventListener('change', e => loadSheetView(e.target.value));
 $('#refreshHome').addEventListener('click', loadAll);
 // تحديث دوري للبيانات، ومش بنحدّث وهو بيتكتب فاتورة عشان ما نمسحش الفورم
 setInterval(() => { if (me && page !== 'sell') loadAll(); }, 60000);

@@ -1,5 +1,5 @@
 // غيّر رقم النسخة (v2, v3 ...) كل ما تعدّل الملفات عشان الموبايلات تحمّل الجديد
-const CACHE = 'sales-app-v2';
+const CACHE = 'sales-app-v3';
 const SHELL = ['./', './index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', event => {

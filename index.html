@@ -109,7 +109,7 @@
 <script>
 // ============ الإعدادات ============
 // حط هنا لينك Apps Script (Web app URL)
-const API_URL = 'https://script.google.com/macros/s/AKfycbyF6ck-d9PZxrp7r_ye-QQLZBjfFHWFVQO7974SdARaH-yp2_PnBi8Y3o_8H2_41QwTlQ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbzV1OqepiZATk9q3nhzoE2bIGnJ4hRwM-7Zu6pkZG2TkhAI8Lez0VBpAmkYy_aAQnxG/exec';
 
 // ============ أدوات ============
 const $ = s => document.querySelector(s);
@@ -419,6 +419,7 @@ setInterval(() => { if (me && !FORM_PAGES.includes(page)) refreshAll(); }, 60000
 // ============ المخزن والإجمالي (المندوب) ============
 function pgRepTotals() {
   const m = data.month || { total: 0, target: 0, pct: 0, remain: 0, daysLeft: 0, perDay: 0 };
+  const d = data.debts || { total: 0, collected: 0 };
   return `<div class="card">
     <h2>إجمالي البيع حتى النهارده</h2>
     ${kpis([
@@ -429,6 +430,13 @@ function pgRepTotals() {
       ['الأيام الباقية (شامل النهارده)', m.daysLeft],
       ['المطلوب يومياً', m.target ? fmt(m.perDay) + ' ج.م' : '—']
     ])}
+  </div>
+  <div class="card"><h2>المديونية</h2>
+    ${kpis([
+      ['المديونية الباقية على العملاء', fmt(d.total) + ' ج.م', d.total > 0 ? 'neg' : 'pos'],
+      ['اتحصّل من المديونيات', fmt(d.collected) + ' ج.م', 'pos']
+    ])}
+    <p class="hint">التفاصيل في صفحة المديونيات.</p>
   </div>`;
 }
 
@@ -477,7 +485,12 @@ function pgCashAcc() {
     <button class="small" data-act="confirmTrans" data-rep="${esc(r.code)}">تأكيد المحدد</button>`).join('')
     || '<p class="hint">مفيش تحويلات مستنية التأكيد</p>';
 
-  const dueRows = (data.reps || []).map(r => ({ cells: [esc(r.name), `<span class="${negCls(-r.due)}">${fmt(r.due)}</span>`, r.request ? 'مستني تأكيد' : '—'] }));
+  const dueRows = (data.reps || []).map(r => {
+    const dr = (reports?.debts || []).find(x => x.code === r.code);
+    return { cells: [esc(r.name), `<span class="${negCls(-r.due)}">${fmt(r.due)}</span>`,
+      dr ? `<span class="${dr.debtTotal > 0 ? 'neg' : 'pos'}">${fmt(dr.debtTotal)}</span>` : '—',
+      r.request ? 'مستني تأكيد' : '—'] };
+  });
   const repOpts = (data.reps || []).map(r => `<option value="${esc(r.code)}">${esc(r.name)}</option>`).join('');
 
   return `
@@ -488,7 +501,7 @@ function pgCashAcc() {
   </div>
   <div class="card"><h2>طلبات تسليم الكاش</h2>${reqs}</div>
   <div class="card"><h2>تأكيد التحويلات (انستا / محفظة)</h2>${transfers}</div>
-  <div class="card"><h2>المستحق على كل مندوب</h2>${table(['المندوب', 'المستحق', 'طلب'], dueRows)}</div>
+  <div class="card"><h2>المستحق على كل مندوب</h2>${table(['المندوب', 'المستحق من الكاش', 'المديونية الباقية', 'طلب'], dueRows)}</div>
   <div class="card">
     <h2>تسجيل تسليم يدوي</h2>
     <form id="handForm">
@@ -513,7 +526,16 @@ function pgDebts() {
         { empty: 'مفيش مديونيات' })}
     </div>`;
   }
-  const blocks = (reports?.debts || []).map(d => `
+  const summaryRows = (reports?.debts || []).map(d => ({ cells: [
+    esc(d.name), fmt(d.original), fmt(d.collected),
+    `<span class="${d.debtTotal > 0 ? 'neg' : 'pos'}">${fmt(d.debtTotal)}</span>`
+  ]}));
+  const grand = (reports?.debts || []).reduce((a, d) => a + d.debtTotal, 0);
+  const summary = (me.role === 'accountant' ? collHtml() : '') + `<div class="card"><h2>ملخص المديونيات لكل مندوب</h2>
+    ${table(['المندوب', 'إجمالي المديونية', 'اتحصّل منها', 'المديونية الباقية'], summaryRows)}
+    <p class="hint">إجمالي المديونية الباقية على كل المناديب: <b>${fmt(grand)} ج.م</b></p>
+  </div>`;
+  const blocks = summary + (reports?.debts || []).map(d => `
     <div class="card">
       <h2>${esc(d.name)}</h2>
       ${kpis([
@@ -530,7 +552,28 @@ function pgDebts() {
           : `<tr><td colspan="7" class="hint">مفيش فواتير</td></tr>`}</tbody>
       </table></div>
     </div>`).join('');
-  return blocks || '<p class="hint">مفيش بيانات بعد</p>';
+  return blocks;
+}
+
+function collHtml() {
+  const opts = (reports?.debts || []).flatMap(d => d.invoices.filter(x => x.rem > 0).map(x =>
+    `<option value="${esc(d.code + '|' + x.row + '|' + x.inv)}">${esc(d.name)} — فاتورة ${esc(x.inv)} — ${esc(x.custName)} — متبقي ${fmt(x.rem)}</option>`)).join('');
+  if (!opts) return '<div class="card"><h2>تحصيل مديونية</h2><p class="hint">مفيش فواتير عليها مديونية</p></div>';
+  return `<div class="card"><h2>تحصيل مديونية</h2>
+    <form id="collForm">
+      <label>الفاتورة<select name="inv">${opts}</select></label>
+      <div class="row2">
+        <label>المبلغ (ج.م)<input name="amount" type="number" min="0.5" step="0.5" inputmode="decimal" required></label>
+        <label>التاريخ<input type="date" name="date" value="${todayStr()}" required></label>
+      </div>
+      <label>طريقة التحصيل<select name="method">
+        <option>خزينة</option><option>انستا باي</option><option>محفظة إلكترونية</option>
+      </select></label>
+      <button type="submit">تسجيل التحصيل</button>
+      <div class="msg" id="collMsg"></div>
+      <p class="hint">التحصيل كاش بيدخل في المبلغ اللي على المندوب يسلمه. التحويل بيتسجل مباشرة.</p>
+    </form>
+  </div>`;
 }
 
 // ============ الجرد الفعلي (المحاسب) ============
@@ -913,6 +956,7 @@ document.addEventListener('submit', async e => {
   if (f.id === 'handForm') await submitHand(f);
   if (f.id === 'lockForm') await submitLock(f);
   if (f.id === 'editForm') await submitEdit(f);
+  if (f.id === 'collForm') await submitColl(f);
 });
 
 // ============ الدخول ============
@@ -1052,6 +1096,19 @@ async function submitLock(f) {
   const res = await api('setSetting', { key: 'LOCK_BEFORE', value: f.lock.value });
   $('#setMsg').textContent = res.ok ? 'تم حفظ تاريخ القفل' : (res.error || 'خطأ');
   if (res.ok) await refreshAll();
+}
+
+async function submitColl(f) {
+  const msg = $('#collMsg'); msg.textContent = '';
+  const [repCode, row, inv] = String(f.inv.value).split('|');
+  const res = await api('collectDebt', {
+    id: newId(), repCode, row, invoice: inv, date: f.date.value,
+    amount: num(f.amount.value), method: f.method.value
+  });
+  if (!res.ok) { msg.textContent = res.error || 'خطأ'; return; }
+  msg.textContent = res.duplicate ? 'العملية دي اتسجلت قبل كده' : 'تم تسجيل التحصيل';
+  f.amount.value = '';
+  await refreshAll();
 }
 
 async function submitEdit(f) {

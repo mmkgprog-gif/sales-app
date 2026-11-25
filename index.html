@@ -5,64 +5,78 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f766e">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="المبيعات">
+<meta name="apple-mobile-web-app-title" content="المهندس">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<title>إدارة المبيعات</title>
+<title>شركة المهندس</title>
 <style>
-  :root { --ink:#1d2330; --mut:#6b7280; --line:#e5e7eb; --brand:#0f766e; --bg:#f4f6f8; --warn:#b45309; --bad:#b91c1c; }
+  :root { --ink:#1b2430; --mut:#64707f; --line:#e3e8ee; --brand:#0f766e; --brand2:#115e59; --bg:#f2f5f7; --warn:#b45309; --bad:#b91c1c; --ok:#15803d; }
   * { box-sizing:border-box; }
-  body { margin:0; font-family:system-ui,"Segoe UI",Tahoma,sans-serif; background:var(--bg); color:var(--ink); font-size:16px; padding-bottom:30px; }
-  header { position:sticky; top:0; z-index:5; background:var(--brand); color:#fff; padding:12px 16px; padding-top:calc(12px + env(safe-area-inset-top)); display:flex; justify-content:space-between; align-items:center; gap:8px; }
-  header h1 { font-size:17px; margin:0; }
-  #netState { font-size:12px; opacity:.95; }
-  #logoutBtn { background:transparent; border:1px solid #ffffff88; color:#fff; border-radius:8px; padding:6px 10px; font-size:12px; width:auto; min-height:0; }
-  nav { display:flex; overflow-x:auto; gap:6px; padding:8px 10px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:52px; z-index:4; }
-  nav button { width:auto; min-height:40px; padding:8px 14px; background:#e2e8f0; color:var(--ink); font-size:14px; white-space:nowrap; border-radius:999px; }
+  body { margin:0; font-family:system-ui,"Segoe UI",Tahoma,Arial,sans-serif; background:var(--bg); color:var(--ink); font-size:17px; line-height:1.6; padding-bottom:40px; }
+  header { position:sticky; top:0; z-index:6; background:var(--brand); color:#fff; padding:12px 16px; padding-top:calc(12px + env(safe-area-inset-top)); display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .brand { display:flex; align-items:center; gap:10px; }
+  .brand svg { width:40px; height:40px; flex:0 0 40px; }
+  header h1 { font-size:19px; margin:0; font-weight:800; }
+  .hd-right { display:flex; align-items:center; gap:8px; }
+  #netState { font-size:13px; }
+  #logoutBtn { background:transparent; border:2px solid #ffffffaa; color:#fff; border-radius:10px; padding:6px 12px; font-size:14px; width:auto; min-height:0; }
+  nav { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:66px; z-index:5; }
+  nav button { width:auto; min-height:44px; padding:8px 16px; background:#e6ecf1; color:var(--ink); font-size:15px; white-space:nowrap; border-radius:999px; font-weight:700; }
   nav button.on { background:var(--brand); color:#fff; }
-  main { padding:12px; max-width:720px; margin:0 auto; }
-  .card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:14px; }
-  h2 { font-size:17px; margin:0 0 12px; }
-  label { display:block; font-size:14px; color:var(--mut); margin-bottom:12px; }
-  input, select, textarea { width:100%; margin-top:6px; padding:12px; font-size:16px; border:1px solid #cbd5e1; border-radius:10px; background:#fff; color:var(--ink); min-height:48px; }
-  input:disabled { background:#f1f5f9; }
-  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  button { width:100%; min-height:50px; border:0; border-radius:12px; background:var(--brand); color:#fff; font-size:16px; font-weight:700; cursor:pointer; }
-  button.secondary { background:#e2e8f0; color:var(--ink); }
-  button.small { width:auto; min-height:36px; font-size:13px; padding:6px 12px; }
-  button.danger { background:var(--bad); }
-  .preview { background:var(--bg); border-radius:10px; padding:10px; margin:4px 0 12px; font-weight:700; }
-  .hint { color:var(--mut); font-size:13px; line-height:1.7; margin:8px 0 0; }
-  .msg { color:var(--warn); font-size:14px; min-height:20px; margin-top:8px; }
-  .tw { overflow-x:auto; }
-  table { width:100%; border-collapse:collapse; font-size:14px; min-width:420px; }
-  th, td { padding:9px 8px; border-bottom:1px solid var(--line); text-align:center; white-space:nowrap; }
-  th { background:#f9fafb; color:var(--mut); font-weight:600; font-size:12px; }
-  td.nm { text-align:right; }
-  .neg { color:var(--bad); font-weight:700; }
-  .kpi { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:12px; }
-  .kpi div { background:var(--bg); border-radius:10px; padding:10px; }
-  .kpi span { display:block; font-size:12px; color:var(--mut); }
-  .kpi b { font-size:18px; }
-  .rec { border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:10px; }
-  .rec.pending { border-color:#fcd34d; background:#fffbeb; }
+  main { padding:12px; max-width:760px; margin:0 auto; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:16px; box-shadow:0 1px 2px #0000000a; }
+  h2 { font-size:20px; margin:0 0 12px; color:var(--brand2); }
+  h3 { font-size:17px; margin:14px 0 8px; }
+  label { display:block; font-size:16px; color:var(--ink); font-weight:700; margin-bottom:14px; }
+  input, select, textarea { width:100%; margin-top:6px; padding:12px; font-size:17px; border:2px solid #cfd8e0; border-radius:12px; background:#fff; color:var(--ink); min-height:52px; font-weight:400; }
+  input:focus, select:focus { outline:none; border-color:var(--brand); }
+  input:disabled { background:#eef2f5; color:var(--mut); }
+  input[type=checkbox] { width:24px; height:24px; min-height:0; margin:0; }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .row3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  button { width:100%; min-height:54px; border:0; border-radius:14px; background:var(--brand); color:#fff; font-size:18px; font-weight:800; cursor:pointer; }
+  button:disabled { background:#9aa5b1; }
+  button.secondary { background:#e6ecf1; color:var(--ink); }
+  button.small { width:auto; min-height:38px; font-size:14px; padding:6px 14px; border-radius:10px; }
+  button.bad { background:var(--bad); }
+  .preview { background:#eaf6f4; border:2px solid #b7e3dc; border-radius:12px; padding:12px; margin:4px 0 14px; font-weight:800; font-size:18px; color:var(--brand2); }
+  .hint { color:var(--mut); font-size:14px; line-height:1.8; margin:8px 0 0; }
+  .msg { color:var(--warn); font-size:15px; min-height:22px; margin-top:10px; font-weight:700; }
+  .ok { color:var(--ok); }
+  .tw { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  table { width:100%; border-collapse:collapse; font-size:15px; min-width:360px; }
+  th, td { padding:10px 8px; border-bottom:1px solid var(--line); text-align:center; white-space:nowrap; }
+  th { background:#f5f8fa; color:var(--mut); font-weight:800; font-size:14px; }
+  td.nm { text-align:right; font-weight:700; }
+  tr.total td { background:#eef6f5; font-weight:900; }
+  .neg { color:var(--bad); font-weight:800; }
+  .pos { color:var(--ok); font-weight:800; }
+  .kpi { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:12px; }
+  .kpi div { background:#f5f8fa; border:1px solid var(--line); border-radius:14px; padding:12px; }
+  .kpi span { display:block; font-size:14px; color:var(--mut); font-weight:700; }
+  .kpi b { font-size:21px; color:var(--ink); }
+  .rec { border:2px solid var(--line); border-radius:14px; padding:12px; margin-bottom:10px; }
+  .rec.pending { border-color:#f5c451; background:#fffbeb; }
   .rec.rejected { border-color:#fca5a5; background:#fef2f2; }
-  .rec .top { display:flex; justify-content:space-between; gap:8px; font-weight:700; margin-bottom:6px; }
-  .badge { font-size:12px; font-weight:600; }
-  .meta { font-size:13px; color:var(--mut); margin-top:4px; }
-  .modal { position:fixed; inset:0; background:#0007; display:flex; align-items:flex-end; justify-content:center; z-index:20; }
-  .modal[hidden] { display:none; }
-  .modal .sheet { background:#fff; width:100%; max-width:720px; border-radius:18px 18px 0 0; padding:16px; max-height:90vh; overflow:auto; padding-bottom:calc(16px + env(safe-area-inset-bottom)); }
-  .row-actions { display:flex; gap:6px; justify-content:center; }
-  .toggle { display:flex; align-items:center; gap:8px; font-size:15px; }
-  .toggle input { width:22px; height:22px; min-height:0; margin:0; }
+  .rec .top { display:flex; justify-content:space-between; gap:8px; font-weight:800; margin-bottom:4px; flex-wrap:wrap; }
+  .badge { font-size:13px; font-weight:700; }
+  .meta { font-size:14px; color:var(--mut); margin-top:4px; }
+  .modal { position:fixed; inset:0; background:#0009; display:flex; align-items:flex-end; justify-content:center; z-index:20; }
+  .modal.hidden { display:none; }
+  .modal .sheet { background:#fff; width:100%; max-width:760px; border-radius:20px 20px 0 0; padding:18px; max-height:92vh; overflow:auto; padding-bottom:calc(18px + env(safe-area-inset-bottom)); }
+  .check-row { display:flex; align-items:center; gap:10px; font-size:16px; font-weight:700; margin-bottom:12px; }
+  .check-row input { width:24px; height:24px; min-height:0; margin:0; }
   .hidden { display:none !important; }
+  .section-gap { height:6px; }
 </style>
 </head>
 <body>
 <header>
-  <h1 id="title">إدارة المبيعات</h1>
-  <div style="display:flex;gap:8px;align-items:center">
+  <div class="brand">
+    <span id="logo"></span>
+    <h1 id="title">شركة المهندس</h1>
+  </div>
+  <div class="hd-right">
     <span id="netState"></span>
     <button id="logoutBtn" class="hidden">خروج</button>
   </div>
@@ -70,7 +84,6 @@
 <nav id="nav" class="hidden"></nav>
 
 <main>
-  <!-- دخول -->
   <section id="login" class="card hidden">
     <h2>تسجيل الدخول</h2>
     <form id="loginForm">
@@ -80,184 +93,23 @@
       <label>الرقم السري
         <input id="lpin" type="password" inputmode="numeric" required autocomplete="current-password">
       </label>
+      <label class="check-row"><input type="checkbox" id="showPin"> إظهار الرقم السري</label>
       <button type="submit">دخول</button>
       <div id="loginMsg" class="msg"></div>
     </form>
   </section>
 
-  <!-- الشاشة الرئيسية (المدير والمحاسب) -->
-  <section id="p-home" class="page hidden">
-    <div class="card">
-      <h2>الشاشة الرئيسية</h2>
-      <label>اختار الشيت
-        <select id="viewSel"></select>
-      </label>
-      <div class="tw" id="viewBox"></div>
-      <p class="hint" id="homeStamp"></p>
-      <button class="secondary" id="refreshHome">تحديث</button>
-    </div>
-  </section>
-
-  <!-- بيع جديد (المندوب والمحاسب) -->
-  <section id="p-sell" class="page hidden">
-    <form id="saleForm" class="card">
-      <h2>فاتورة بيع جديدة</h2>
-      <label id="repWrap" class="hidden">المندوب
-        <select id="targetRep"></select>
-      </label>
-      <label>العميل
-        <input id="cust" list="custList" required placeholder="ابحث بالكود أو الاسم" autocomplete="off">
-        <datalist id="custList"></datalist>
-      </label>
-      <label>الصنف
-        <select id="item" required></select>
-      </label>
-      <div class="row2">
-        <label>كراتين <input id="cartons" type="number" min="0" inputmode="numeric" value="0"></label>
-        <label>علب <input id="boxes" type="number" min="0" inputmode="numeric" value="0"></label>
-      </div>
-      <label>سعر الكرتونة (ج.م)
-        <input id="price" type="number" min="0" step="0.5" inputmode="decimal">
-      </label>
-      <div id="priceNote" class="hint hidden">السعر محدد من الإدارة.</div>
-      <label>المدفوع الآن (ج.م)
-        <input id="paid" type="number" min="0" step="0.5" inputmode="decimal" value="0">
-      </label>
-      <label>طريقة التحصيل
-        <select id="method">
-          <option>خزينة</option>
-          <option>بنك</option>
-          <option>محفظة إلكترونية</option>
-          <option>انستا باي</option>
-        </select>
-      </label>
-      <div id="preview" class="preview"></div>
-      <button type="submit">حفظ الفاتورة</button>
-      <div id="formMsg" class="msg"></div>
-      <p class="hint">الفاتورة بتتقفل بعد الحفظ. المبلغ اللي متدفعش هيتسجل كآجل على العميل.</p>
-    </form>
-  </section>
-
-  <!-- المخزن (المندوب) -->
-  <section id="p-stock" class="page hidden">
-    <div class="card">
-      <h2>بضاعة السيارة</h2>
-      <div class="tw"><table>
-        <thead><tr><th>الصنف</th><th>كراتين</th><th>علب</th></tr></thead>
-        <tbody id="stockBody"></tbody>
-      </table></div>
-    </div>
-  </section>
-
-  <!-- الفواتير (المندوب والمحاسب) -->
-  <section id="p-invoices" class="page hidden">
-    <div id="repPick" class="card hidden">
-      <label>المندوب
-        <select id="invRep"></select>
-      </label>
-    </div>
-    <div class="card">
-      <h2 id="invTitle">فواتيري</h2>
-      <div id="queueList"></div>
-      <div class="tw"><table id="invTable" class="hidden">
-        <thead><tr><th>التاريخ</th><th>فاتورة</th><th>العميل</th><th>الصنف</th><th>ك</th><th>ع</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th>طريقة</th><th></th></tr></thead>
-        <tbody id="invBody"></tbody>
-      </table></div>
-    </div>
-  </section>
-
-  <!-- الكاش (المندوب والمحاسب) -->
-  <section id="p-cash" class="page hidden">
-    <div class="card" id="repCash">
-      <h2>الكاش</h2>
-      <div class="kpi">
-        <div><span>إجمالي الكاش المحصّل</span><b id="cTotal">0</b></div>
-        <div><span>اتسلّم واتأكد</span><b id="cConf">0</b></div>
-        <div><span>المطلوب تسليمه</span><b id="cDue">0</b></div>
-      </div>
-      <div id="cReqBox"></div>
-      <p class="hint">الكاش ده لازم تسلّمه في المكتب تاني يوم. لما تسلّم اضغط الزرار، والمحاسب هيأكد الاستلام.</p>
-    </div>
-
-    <div class="card" id="accCash">
-      <h2>طلبات التسليم</h2>
-      <div id="openReqs"></div>
-      <h2 style="margin-top:14px">المندوبين والمستحق</h2>
-      <div class="tw"><table>
-        <thead><tr><th>المندوب</th><th>المستحق</th><th>طلب</th></tr></thead>
-        <tbody id="repDueBody"></tbody>
-      </table></div>
-      <h2 style="margin-top:14px">تسجيل تسليم يدوي</h2>
-      <form id="handForm">
-        <label>المندوب <select id="hRep"></select></label>
-        <label>المبلغ (ج.م) <input id="hAmount" type="number" min="0" step="0.5" inputmode="decimal" required></label>
-        <label>ملاحظة <input id="hNote" placeholder="مثلاً: تسوية رصيد أول المدة"></label>
-        <button type="submit">تسجيل التسليم</button>
-        <div id="hMsg" class="msg"></div>
-      </form>
-    </div>
-  </section>
-
-  <!-- العملاء (المحاسب) -->
-  <section id="p-customers" class="page hidden">
-    <div class="card">
-      <h2>العملاء المتاحين للمندوب</h2>
-      <label>بحث <input id="custSearch" placeholder="اكتب الكود أو الاسم"></label>
-      <div class="tw"><table>
-        <thead><tr><th>الكود</th><th>الاسم</th><th>متاح للمندوب</th></tr></thead>
-        <tbody id="custBody"></tbody>
-      </table></div>
-      <p class="hint" id="custCount"></p>
-    </div>
-  </section>
-
-  <!-- الإعدادات (المحاسب) -->
-  <section id="p-settings" class="page hidden">
-    <div class="card">
-      <h2>الإعدادات</h2>
-      <label class="toggle"><input type="checkbox" id="priceLock"> تثبيت سعر البيع (المندوب ما يقدرش يغيّره)</label>
-      <p class="hint">لما تفعّله، المندوب بيبيع بسعر الكرتونة من شيت البيانات الرئيسية.</p>
-      <div id="setMsg" class="msg"></div>
-    </div>
-  </section>
+  <div id="view"></div>
 </main>
 
-<!-- تعديل فاتورة (المحاسب) -->
 <div id="modal" class="modal hidden">
-  <div class="sheet">
-    <h2>تعديل فاتورة</h2>
-    <form id="editForm">
-      <div class="row2">
-        <label>التاريخ <input id="eDate" type="date" required></label>
-        <label>كود العميل <input id="eCust" list="custList" required></label>
-      </div>
-      <label>كود الصنف <input id="eItem" required></label>
-      <div class="row2">
-        <label>كراتين <input id="eCtn" type="number" min="0" inputmode="numeric"></label>
-        <label>علب <input id="eBox" type="number" min="0" inputmode="numeric"></label>
-      </div>
-      <div class="row2">
-        <label>سعر الكرتونة <input id="ePrice" type="number" min="0" step="0.5" inputmode="decimal"></label>
-        <label>المدفوع <input id="ePaid" type="number" min="0" step="0.5" inputmode="decimal"></label>
-      </div>
-      <label>طريقة التحصيل
-        <select id="eMethod">
-          <option>خزينة</option><option>بنك</option><option>محفظة إلكترونية</option><option>انستا باي</option>
-        </select>
-      </label>
-      <div class="row-actions">
-        <button type="submit">حفظ التعديل</button>
-        <button type="button" class="secondary" id="eCancel">إلغاء</button>
-      </div>
-      <div id="eMsg" class="msg"></div>
-    </form>
-  </div>
+  <div class="sheet" id="modalBody"></div>
 </div>
 
 <script>
 // ============ الإعدادات ============
-// حط هنا لينك الـ Web App بتاع Apps Script
-const API_URL = 'https://script.google.com/macros/s/AKfycbxcJdW5iPCLsuRiwmeJCl80-rVfqpUKCjUH4vb61_wGcZfmn1sC2Ok_wwNuPEfqnz1VFA/exec';
+// حط هنا لينك Apps Script (Web app URL)
+const API_URL = 'https://script.google.com/macros/s/AKfycbzvmeM6KplSRTnZWwAprfvUAIbQsHzUSa1PK2fBClACk3_k_4f3EjR6Ya4FnqJoQLHxgw/exec';
 
 // ============ أدوات ============
 const $ = s => document.querySelector(s);
@@ -267,17 +119,55 @@ const store = {
 };
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = n => Number(n || 0).toLocaleString('en-US', { maximumFractionDigits: 2 });
+const pct = n => (Number(n || 0) * 100).toFixed(1) + '%';
+const num = v => { const n = Number(v); return isFinite(n) ? n : 0; };
 const todayStr = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); };
 const newId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+const negCls = n => n < 0 ? 'neg' : '';
 
-let me = store.get('me', null);          // { code, name, role, pin }
-let data = store.get('data', null);      // آخر bootstrap
-let queue = store.get('queue', []);      // مبيعات المندوب المستنية الإرسال
+const LOGO = `<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle cx="256" cy="256" r="256" fill="#ffffff"/>
+  <circle cx="256" cy="256" r="226" fill="#0f766e"/>
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#ffffff" stroke-width="8"/>
+  <rect x="186" y="120" width="140" height="170" rx="16" fill="#ffffff"/>
+  <rect x="210" y="158" width="92" height="14" rx="7" fill="#0f766e"/>
+  <rect x="210" y="190" width="70" height="14" rx="7" fill="#7dd3c7"/>
+  <rect x="210" y="222" width="82" height="14" rx="7" fill="#7dd3c7"/>
+  <circle cx="352" cy="170" r="34" fill="#f59e0b"/>
+  <text x="352" y="182" font-size="38" font-weight="bold" text-anchor="middle" fill="#ffffff" font-family="Tahoma, Arial, sans-serif">ج</text>
+  <text x="256" y="350" font-size="62" font-weight="bold" text-anchor="middle" fill="#ffffff" font-family="Tahoma, Arial, sans-serif">المهندس</text>
+  <text x="256" y="405" font-size="30" text-anchor="middle" fill="#ccfbf1" font-family="Tahoma, Arial, sans-serif">شركة</text>
+</svg>`;
+$('#logo').innerHTML = LOGO;
+
+// ============ الحالة ============
+let me = store.get('me', null);            // { code, name, role, pin }
+let data = store.get('data', null);        // bootstrap
+let reports = store.get('reports', null);  // تقارير المحاسب والمشرف
+let queue = store.get('queue', []);        // المبيعات المستنية الإرسال
 let page = '';
-let invMap = {};                          // صفوف الفواتير للتعديل
+let invMap = {};
+let invRep = '';
 let syncing = false;
 
 const saveQueue = () => store.set('queue', queue);
+
+// ============ الصفحات حسب الدور ============
+const TABS = {
+  rep: [['sell','بيع'], ['totals','الإجمالي والتارجت'], ['stock','المخزن'], ['cash','الكاش'], ['debts','المديونيات']],
+  supervisor: [['sup_sales','مبيعات الأصناف'], ['sup_stock','المخازن'], ['sup_target','التارجت'], ['sup_purch','المشتريات'], ['sup_main','المخزن الرئيسي'], ['sup_debts','الفواتير والمديونيات']],
+  accountant: [['sell','بيع'], ['count','جرد'], ['loads','تحميل ومرتجع'], ['purch','مشتريات'], ['rep_report','تقرير المناديب'], ['stores','المخازن'], ['debts','المديونيات'], ['cash','الكاش اليوم'], ['invoices','الفواتير'], ['customers','العملاء'], ['settings','الإعدادات'], ['sheets','الشيتات']],
+  manager: []
+};
+const FIRST_PAGE = { rep: 'sell', supervisor: 'sup_sales', accountant: 'sell', manager: 'owner' };
+
+const PAY = [
+  { k: 'cash',   label: 'كاش (خزينة)',       method: 'خزينة',              credit: false },
+  { k: 'insta',  label: 'تحويل انستا باي',   method: 'انستا باي',          credit: false },
+  { k: 'wallet', label: 'تحويل محفظة',       method: 'محفظة إلكترونية',    credit: false },
+  { k: 'credit', label: 'آجل',               method: 'آجل',                credit: true  }
+];
+const METHOD_LIST = ['خزينة', 'انستا باي', 'محفظة إلكترونية', 'آجل'];
 
 // ============ الاتصال ============
 async function api(action, body = {}) {
@@ -289,82 +179,725 @@ async function api(action, body = {}) {
   return r.json();
 }
 
-// ============ الصفحات حسب الدور ============
-const TABS = {
-  rep:        [['sell','بيع'], ['stock','المخزن'], ['invoices','فواتيري'], ['cash','الكاش']],
-  manager:    [['home','الرئيسية']],
-  accountant: [['home','الرئيسية'], ['sell','بيع'], ['invoices','الفواتير'], ['cash','الكاش'], ['customers','العملاء'], ['settings','الإعدادات']]
-};
-
-function showPage(p) {
-  page = p;
-  document.querySelectorAll('.page').forEach(s => s.classList.add('hidden'));
-  $('#p-' + p).classList.remove('hidden');
-  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.p === p));
-  if (p === 'sell') renderSell();
-  if (p === 'stock') renderStock();
-  if (p === 'invoices') renderInvoices();
-  if (p === 'cash') renderCash();
-  if (p === 'home') renderHome();
-  if (p === 'customers') renderCustomers();
-  if (p === 'settings') renderSettings();
+function table(head, rows, opts = {}) {
+  const h = head ? `<thead><tr>${head.map(x => `<th>${x}</th>`).join('')}</tr></thead>` : '';
+  const b = rows.length ? rows.map(r => `<tr class="${r.cls || ''}">${r.cells.map((c, i) => `<td class="${i === 0 ? 'nm' : ''}">${c}</td>`).join('')}</tr>`).join('')
+                        : `<tr><td colspan="${head ? head.length : 1}" class="hint">${opts.empty || 'مفيش بيانات'}</td></tr>`;
+  return `<div class="tw"><table>${h}<tbody>${b}</tbody></table></div>`;
 }
 
+function kpis(items) {
+  return `<div class="kpi">${items.map(i => `<div><span>${i[0]}</span><b class="${i[2] || ''}">${i[1]}</b></div>`).join('')}</div>`;
+}
+
+// ============ التنقل ============
 function buildNav() {
   const tabs = TABS[me.role] || [];
   $('#nav').innerHTML = tabs.map(([p, t]) => `<button data-p="${p}">${t}</button>`).join('');
-  $('#nav').classList.remove('hidden');
-  $('#nav').querySelectorAll('button').forEach(b => b.addEventListener('click', () => showPage(b.dataset.p)));
+  $('#nav').classList.toggle('hidden', tabs.length === 0);
+}
+
+function go(p) {
+  page = p;
+  store.set('page', p);
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.p === p));
+  render();
 }
 
 function showLogin() {
-  me = null; data = null; store.set('me', null); store.set('data', null);
+  me = null; data = null; reports = null;
+  store.set('me', null); store.set('data', null); store.set('reports', null);
   $('#login').classList.remove('hidden');
   $('#nav').classList.add('hidden');
   $('#logoutBtn').classList.add('hidden');
-  document.querySelectorAll('.page').forEach(s => s.classList.add('hidden'));
-  $('#title').textContent = 'إدارة المبيعات';
+  $('#view').innerHTML = '';
+  $('#title').textContent = 'شركة المهندس';
 }
 
 function showApp() {
   $('#login').classList.add('hidden');
   $('#logoutBtn').classList.remove('hidden');
-  $('#title').textContent = data?.name || me.name;
+  $('#title').textContent = (data?.name || me.name) + ' — شركة المهندس';
   buildNav();
-  const first = (TABS[me.role] || [])[0][0];
-  showPage(first);
-  renderAll();
+  const saved = store.get('page', null);
+  const valid = (TABS[me.role] || []).some(t => t[0] === saved) || (me.role === 'manager' && saved === 'owner');
+  go(valid ? saved : FIRST_PAGE[me.role]);
 }
 
 // ============ تحميل البيانات ============
-async function loadAll() {
+async function refreshAll() {
   if (!me) return;
   try {
-    const res = await api('bootstrap');
-    if (!res.ok) {
-      if (res.error === 'bad_pin') { showLogin(); $('#loginMsg').textContent = 'الرقم السري اتغير، ادخل تاني'; }
+    const b = await api('bootstrap');
+    if (!b.ok) {
+      if (b.error === 'bad_pin') { showLogin(); $('#loginMsg').textContent = 'الكود أو الرقم السري اتغير، ادخل تاني'; }
       return;
     }
-    data = res;
-    store.set('data', data);
-    renderAll();
+    data = b; store.set('data', data);
+    if (me.role === 'accountant' || me.role === 'supervisor') {
+      const r = await api('reports');
+      if (r.ok) { reports = r; store.set('reports', reports); }
+    }
   } catch {}
-}
-
-function renderAll() {
-  if (!data) return;
-  renderSell();
-  renderStock();
-  renderInvoices();
-  renderCash();
-  renderHome();
-  renderCustomers();
-  renderSettings();
-  renderQueue();
+  render();
   updateNet();
 }
 
+// ============ رسم الصفحة ============
+const PAGES = {
+  owner: pgOwner,
+  sell: pgSell, totals: pgRepTotals, stock: pgRepStock, cash: pgCash, debts: pgDebts,
+  count: pgCount, loads: pgLoads, purch: pgPurch, rep_report: pgRepReport, stores: pgStores,
+  invoices: pgInvoices, customers: pgCustomers, settings: pgSettings, sheets: pgSheets,
+  sup_sales: pgSupSales, sup_stock: pgSupStock, sup_target: pgSupTarget, sup_purch: pgSupPurch,
+  sup_main: pgSupMain, sup_debts: pgDebts
+};
+
+function render() {
+  if (!me) return;
+  const fn = PAGES[page];
+  if (!fn) return;
+  if (!data) { $('#view').innerHTML = '<p class="hint">جاري التحميل...</p>'; return; }
+  const needsReports = ['rep_report','stores','debts','sup_sales','sup_stock','sup_target','sup_purch','sup_main','sup_debts','count','loads','purch','cash'].includes(page);
+  if (needsReports && !reports && me.role !== 'rep') {
+    $('#view').innerHTML = '<p class="hint">جاري تحميل التقارير...</p>';
+    return;
+  }
+  $('#view').innerHTML = fn();
+  afterRender();
+}
+
+function afterRender() {
+  if (page === 'sell') updatePreview();
+  if (page === 'invoices' && me.role === 'accountant') loadInvoices();
+  if (page === 'loads') updateLoadInfo();
+}
+
+// ============ شاشة المدير (صاحب الشركة) ============
+function pgOwner() {
+  const eq = data.equation || { header: [], rows: [] };
+  const rows = eq.rows.map(r => {
+    const isTotal = /إجمالي|فرق/.test(r[0] + r[2]);
+    return { cls: isTotal ? 'total' : '', cells: [esc(r[0]), esc(r[1]), esc(r[2]), esc(r[3])] };
+  });
+  return `<div class="card">
+    <h2>معادلة الاستثمار</h2>
+    ${table(['الأصول', 'القيمة (ج.م)', 'الخصوم وحقوق الملكية', 'القيمة (ج.م)'], rows, { empty: 'مفيش بيانات' })}
+    <p class="hint">المعادلة متوازنة لما فرق الميزان يساوي صفر.</p>
+  </div>`;
+}
+
+// ============ البيع (المندوب والمحاسب) ============
+function pgSell() {
+  const isAcc = me.role === 'accountant';
+  const locked = !!data.priceLocked && !isAcc;
+  const custOpts = (data.customers || []).map(c => `<option value="${esc(c.code)} - ${esc(c.name)}"></option>`).join('');
+  const itemOpts = (data.items || []).map(i => `<option value="${esc(i.code)}">${esc(i.name)}</option>`).join('');
+  const repOpts = (data.reps || []).map(r => `<option value="${esc(r.code)}">${esc(r.name)}</option>`).join('');
+  const payOpts = PAY.map(p => `<option value="${p.k}">${esc(p.label)}</option>`).join('');
+  return `
+  <div class="card">
+    <h2>فاتورة بيع جديدة</h2>
+    <form id="saleForm">
+      ${isAcc ? `<label>المندوب<select name="rep">${repOpts}</select></label>
+                 <label>التاريخ<input type="date" name="date" value="${todayStr()}" required></label>` : ''}
+      <label>العميل
+        <input name="cust" list="custList" required placeholder="اكتب الكود أو الاسم" autocomplete="off">
+      </label>
+      <datalist id="custList">${custOpts}</datalist>
+      <label>الصنف<select name="item" required>${itemOpts}</select></label>
+      <div class="row2">
+        <label>كراتين<input name="ctn" type="number" min="0" inputmode="numeric" value="0"></label>
+        <label>علب<input name="box" type="number" min="0" inputmode="numeric" value="0"></label>
+      </div>
+      <label>سعر الكرتونة (ج.م)
+        <input name="price" type="number" min="0" step="0.5" inputmode="decimal" ${locked ? 'disabled' : ''}>
+      </label>
+      ${locked ? '<p class="hint">السعر محدد من الإدارة، مش هتقدر تغيّره.</p>' : ''}
+      <label>نوع التحصيل<select name="pay">${payOpts}</select></label>
+      <label>المدفوع الآن (ج.م)<input name="paid" type="number" min="0" step="0.5" inputmode="decimal" value="0"></label>
+      <div class="preview" id="preview"></div>
+      <button type="submit">حفظ الفاتورة</button>
+      <div class="msg" id="formMsg"></div>
+      <p class="hint">الكاش لازم يتسلّم في المكتب تاني يوم. التحويلات لازم المحاسب يأكدها. الآجل بيتسجل على العميل.</p>
+    </form>
+  </div>
+  <div class="card"><h2>فواتير في الانتظار</h2><div id="queueList">${queueHtml()}</div></div>`;
+}
+
+function findCustByText(text) {
+  const t = String(text).trim();
+  return (data.customers || []).find(c => `${c.code} - ${c.name}` === t || c.code === t || c.name === t) || null;
+}
+function findItem(code) { return (data.items || []).find(i => i.code === code) || null; }
+
+function updatePreview() {
+  const f = $('#saleForm'); if (!f) return;
+  const it = findItem(f.item.value);
+  const per = it ? it.perCarton : 1;
+  const locked = !!data.priceLocked && me.role !== 'accountant';
+  const price = locked ? (it ? it.defaultPrice : 0) : num(f.price.value);
+  const total = num(f.ctn.value) * price + num(f.box.value) * price / per;
+  const pay = PAY.find(p => p.k === f.pay.value);
+  if (pay && pay.credit) f.paid.value = 0;
+  $('#preview').textContent = `الإجمالي: ${fmt(total)} ج.م`;
+}
+
+function queueHtml() {
+  const mine = queue.filter(q => me.role === 'accountant' ? true : q.repCode === me.code).filter(q => q.status !== 'synced').slice(0, 30);
+  if (!mine.length) return '<p class="hint">مفيش فواتير مستنية</p>';
+  return mine.map(q => `
+    <div class="rec ${q.status}">
+      <div class="top"><span>${esc(q.repName)}</span><span class="badge">${badge(q)}</span></div>
+      <div>${esc(q.custName)} — ${esc(q.itemName)}</div>
+      <div class="meta">${q.ctn} ك + ${q.box} ع · ${fmt(q.total)} ج.م · مدفوع ${fmt(q.paid)} · ${esc(q.method)}</div>
+    </div>`).join('');
+}
+
+function badge(q) {
+  if (q.status === 'pending') return '⏳ مستنية الإرسال';
+  if (q.status === 'synced') return '🔒 اتسجلت';
+  return '⚠ اترفضت: ' + esc(q.error);
+}
+
+// ============ إرسال المبيعات ============
+async function syncQueue() {
+  if (syncing || !me || !navigator.onLine || API_URL.startsWith('PASTE')) { updateNet(); return; }
+  syncing = true;
+  try {
+    for (const q of queue.filter(x => x.status === 'pending')) {
+      let res;
+      try { res = await api('sale', q.payload); } catch { break; }
+      if (res.ok) { q.status = 'synced'; q.error = ''; q.total = res.total ?? q.total; }
+      else if (res.error === 'bad_pin') { showLogin(); break; }
+      else { q.status = 'rejected'; q.error = res.error || 'خطأ'; }
+      saveQueue();
+    }
+    if (queue.some(x => x.status === 'synced')) {
+      queue = queue.filter(x => x.status !== 'synced' || Date.now() - (x.at || 0) < 600000);
+      saveQueue();
+      await refreshAll();
+    }
+  } finally {
+    syncing = false;
+    if (page === 'sell') { const q = $('#queueList'); if (q) q.innerHTML = queueHtml(); }
+    updateNet();
+  }
+}
+
+function updateNet() {
+  const n = queue.filter(q => q.status === 'pending').length;
+  $('#netState').textContent = (navigator.onLine ? '🟢' : '🔴 بدون نت') + (n ? ` · ${n} مستنية` : '');
+}
+
+window.addEventListener('online', syncQueue);
+window.addEventListener('offline', updateNet);
+setInterval(syncQueue, 30000);
+// تحديث دوري، بس مش في الصفحات اللي فيها فورم عشان ما نمسحش اللي بيتكتب
+const FORM_PAGES = ['sell', 'count', 'loads', 'purch', 'settings', 'customers'];
+setInterval(() => { if (me && !FORM_PAGES.includes(page)) refreshAll(); }, 60000);
+
+// ============ المخزن والإجمالي (المندوب) ============
+function pgRepTotals() {
+  const m = data.month || { total: 0, target: 0, pct: 0, remain: 0, daysLeft: 0, perDay: 0 };
+  return `<div class="card">
+    <h2>إجمالي البيع حتى النهارده</h2>
+    ${kpis([
+      ['إجمالي البيع', fmt(m.total) + ' ج.م'],
+      ['التارجت', m.target ? fmt(m.target) + ' ج.م' : 'مفيش تارجت'],
+      ['نسبة التحقيق', m.target ? pct(m.pct) : '—', m.pct >= 1 ? 'pos' : ''],
+      ['الباقي على التارجت', m.target ? fmt(m.remain) + ' ج.م' : '—', m.remain > 0 ? 'neg' : 'pos'],
+      ['الأيام الباقية (شامل النهارده)', m.daysLeft],
+      ['المطلوب يومياً', m.target ? fmt(m.perDay) + ' ج.م' : '—']
+    ])}
+  </div>`;
+}
+
+function pgRepStock() {
+  const rows = (data.stock || []).map(s => ({ cells: [esc(s.name), `<span class="${negCls(s.ctn)}">${fmt(s.ctn)}</span>`, `<span class="${negCls(s.box)}">${fmt(s.box)}</span>`] }));
+  return `<div class="card"><h2>بضاعة السيارة</h2>${table(['الصنف', 'كراتين', 'علب'], rows, { empty: 'مفيش بضاعة في السيارة' })}</div>`;
+}
+
+// ============ الكاش ============
+function pgCash() {
+  if (me.role === 'accountant') return pgCashAcc();
+  const c = data.cash || { total: 0, confirmed: 0, due: 0, request: null };
+  const reqBox = c.request
+    ? `<div class="rec pending">طلب التسليم بمبلغ <b>${fmt(c.request.amount)} ج.م</b> مستني تأكيد المحاسب.</div>`
+    : `<button data-act="reqHand" ${c.due <= 0 ? 'disabled' : ''}>سلّمت الكاش، اطلب التأكيد</button>`;
+  return `<div class="card">
+    <h2>الكاش</h2>
+    ${kpis([
+      ['إجمالي الكاش المحصّل', fmt(c.total) + ' ج.م'],
+      ['اتسلّم واتأكد', fmt(c.confirmed) + ' ج.م'],
+      ['المطلوب تسليمه تاني يوم', fmt(c.due) + ' ج.م', c.due > 0 ? 'neg' : 'pos']
+    ])}
+    ${reqBox}
+    <p class="hint">الكاش ده لازم تسلّمه في المكتب تاني يوم. لما تسلّم اضغط الزرار، والمحاسب هيأكد الاستلام.</p>
+  </div>`;
+}
+
+function pgCashAcc() {
+  const r = reports?.todayReceived || { total: 0, list: [] };
+  const reqs = (data.openRequests || []).map(x => `
+    <div class="rec pending">
+      <div class="top"><span>${esc(x.repName)}</span><span class="badge">${fmt(x.request.amount)} ج.م</span></div>
+      <div class="meta">طلب بتاريخ ${esc(x.request.date)}</div>
+      <button class="small" data-act="confirmHand" data-id="${esc(x.request.id)}">تأكيد الاستلام</button>
+    </div>`).join('') || '<p class="hint">مفيش طلبات تسليم مستنية</p>';
+
+  const transfers = (data.reps || []).filter(r => (r.pendingTransfers || []).length).map(r => `
+    <h3>${esc(r.name)}</h3>
+    <div class="tw"><table>
+      <thead><tr><th>✓</th><th>فاتورة</th><th>التاريخ</th><th>العميل</th><th>التحويل</th><th>المبلغ</th></tr></thead>
+      <tbody>${r.pendingTransfers.map(t => `<tr>
+        <td><input type="checkbox" data-trans="${esc(r.code)}" data-row="${t.row}" data-inv="${esc(t.inv)}"></td>
+        <td>${esc(t.inv)}</td><td>${esc(t.date)}</td><td class="nm">${esc(t.custName)}</td>
+        <td>${esc(t.method)}</td><td>${fmt(t.total)}</td></tr>`).join('')}</tbody>
+    </table></div>
+    <button class="small" data-act="confirmTrans" data-rep="${esc(r.code)}">تأكيد المحدد</button>`).join('')
+    || '<p class="hint">مفيش تحويلات مستنية التأكيد</p>';
+
+  const dueRows = (data.reps || []).map(r => ({ cells: [esc(r.name), `<span class="${negCls(-r.due)}">${fmt(r.due)}</span>`, r.request ? 'مستني تأكيد' : '—'] }));
+  const repOpts = (data.reps || []).map(r => `<option value="${esc(r.code)}">${esc(r.name)}</option>`).join('');
+
+  return `
+  <div class="card">
+    <h2>المبالغ المستلمة اليوم (تتحول للبنك)</h2>
+    ${kpis([['إجمالي المستلم اليوم', fmt(r.total) + ' ج.م', 'pos']])}
+    ${table(['المندوب', 'المبلغ', 'ملاحظة'], r.list.map(x => ({ cells: [esc(x.repName), fmt(x.amount), esc(x.note)] })), { empty: 'مفيش مبالغ مستلمة اليوم' })}
+  </div>
+  <div class="card"><h2>طلبات تسليم الكاش</h2>${reqs}</div>
+  <div class="card"><h2>تأكيد التحويلات (انستا / محفظة)</h2>${transfers}</div>
+  <div class="card"><h2>المستحق على كل مندوب</h2>${table(['المندوب', 'المستحق', 'طلب'], dueRows)}</div>
+  <div class="card">
+    <h2>تسجيل تسليم يدوي</h2>
+    <form id="handForm">
+      <label>المندوب<select name="rep">${repOpts}</select></label>
+      <label>المبلغ (ج.م)<input name="amount" type="number" min="0" step="0.5" inputmode="decimal" required></label>
+      <label>ملاحظة<input name="note" placeholder="مثلاً: تسوية رصيد أول المدة"></label>
+      <button type="submit">تسجيل التسليم</button>
+      <div class="msg" id="handMsg"></div>
+    </form>
+  </div>`;
+}
+
+// ============ المديونيات ============
+function pgDebts() {
+  if (me.role === 'rep') {
+    const d = data.debts || { total: 0, list: [] };
+    return `<div class="card">
+      <h2>المديونيات المتبقية من البيع</h2>
+      ${kpis([['إجمالي المتبقي على العملاء', fmt(d.total) + ' ج.م', d.total > 0 ? 'neg' : 'pos']])}
+      ${table(['التاريخ', 'فاتورة', 'العميل', 'الإجمالي', 'المدفوع', 'المتبقي'],
+        d.list.map(x => ({ cells: [esc(x.date), esc(x.inv), esc(x.custName), fmt(x.total), fmt(x.paid), `<span class="neg">${fmt(x.rem)}</span>`] })),
+        { empty: 'مفيش مديونيات' })}
+    </div>`;
+  }
+  const blocks = (reports?.debts || []).map(d => `
+    <div class="card">
+      <h2>${esc(d.name)}</h2>
+      ${kpis([
+        ['عدد الفواتير', d.count],
+        ['كاش / تحويل / آجل', `${d.counts.cash} / ${d.counts.transfer} / ${d.counts.credit}`],
+        ['اتسدد منها', fmt(d.paidTotal) + ' ج.م'],
+        ['إجمالي المديونية', fmt(d.debtTotal) + ' ج.م', d.debtTotal > 0 ? 'neg' : 'pos']
+      ])}
+      <div class="tw"><table>
+        <thead><tr><th>التاريخ</th><th>فاتورة</th><th>العميل</th><th>النوع</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th></tr></thead>
+        <tbody>${d.invoices.length ? d.invoices.map(x => `<tr>
+          <td>${esc(x.date)}</td><td>${esc(x.inv)}</td><td class="nm">${esc(x.custName)}</td><td>${esc(x.type)}</td>
+          <td>${fmt(x.total)}</td><td>${fmt(x.paid)}</td><td class="${x.rem > 0 ? 'neg' : ''}">${fmt(x.rem)}</td></tr>`).join('')
+          : `<tr><td colspan="7" class="hint">مفيش فواتير</td></tr>`}</tbody>
+      </table></div>
+    </div>`).join('');
+  return blocks || '<p class="hint">مفيش بيانات بعد</p>';
+}
+
+// ============ الجرد الفعلي (المحاسب) ============
+function stockOf(code) {
+  const s = (reports?.stocks || []).find(x => x.code === code);
+  return s ? s.items : [];
+}
+
+function pgCount() {
+  const repCode = invRep || (data.reps[0] && data.reps[0].code) || '';
+  invRep = repCode;
+  const stock = stockOf(repCode);
+  const rows = (data.items || []).map(it => {
+    const st = stock.find(s => s.name === it.name) || { ctn: 0, box: 0 };
+    return { cells: [
+      esc(it.name),
+      `<span class="${negCls(st.ctn)}">${fmt(st.ctn)}</span>`,
+      `<span class="${negCls(st.box)}">${fmt(st.box)}</span>`,
+      `<input type="number" min="0" inputmode="numeric" data-code="${esc(it.code)}" data-f="ctn" style="min-width:90px">`,
+      `<input type="number" min="0" inputmode="numeric" data-code="${esc(it.code)}" data-f="box" style="min-width:90px">`,
+      `<span data-diff="${esc(it.code)}">—</span>`
+    ]};
+  });
+  const repOpts = (data.reps || []).map(r => `<option value="${esc(r.code)}" ${r.code === repCode ? 'selected' : ''}>${esc(r.name)}</option>`).join('');
+  return `<div class="card">
+    <h2>الجرد الفعلي للمندوب</h2>
+    <label>المندوب<select data-rerender="count">${repOpts}</select></label>
+    <div class="tw"><table>
+      <thead><tr><th>الصنف</th><th>المتاح ك</th><th>المتاح ع</th><th>الجرد ك</th><th>الجرد ع</th><th>النتيجة</th></tr></thead>
+      <tbody>${rows.map(r => `<tr>${r.cells.map((c, i) => `<td class="${i === 0 ? 'nm' : ''}">${c}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table></div>
+    <p class="hint">اكتب الجرد الفعلي، والنتيجة بتظهر على طول: الرقم الموجب زيادة، والسالب عجز.</p>
+    <button id="saveCountBtn" data-act="saveCount">حفظ الجرد</button>
+    <div class="msg" id="countMsg"></div>
+    <div id="countResult"></div>
+  </div>`;
+}
+
+// ============ التحميل والمرتجع (المحاسب) ============
+function pgLoads() {
+  const repCode = invRep || (data.reps[0] && data.reps[0].code) || '';
+  invRep = repCode;
+  const repOpts = (data.reps || []).map(r => `<option value="${esc(r.code)}" ${r.code === repCode ? 'selected' : ''}>${esc(r.name)}</option>`).join('');
+  const itemOpts = (data.items || []).map(i => `<option value="${esc(i.code)}">${esc(i.name)}</option>`).join('');
+  return `<div class="card">
+    <h2>تحميل أو مرتجع</h2>
+    <form id="loadForm">
+      <label>المندوب<select name="rep" data-rerender="loads">${repOpts}</select></label>
+      <label>النوع<select name="type">
+        <option value="load">تحميل (من المخزن الرئيسي للمندوب)</option>
+        <option value="return">مرتجع (من المندوب للمخزن الرئيسي)</option>
+      </select></label>
+      <label>التاريخ<input type="date" name="date" value="${todayStr()}" required></label>
+      <label>الصنف<select name="item">${itemOpts}</select></label>
+      <div class="row2">
+        <label>كراتين<input name="ctn" type="number" min="0" inputmode="numeric" value="0"></label>
+        <label>علب<input name="box" type="number" min="0" inputmode="numeric" value="0"></label>
+      </div>
+      <label>ملاحظة<input name="note"></label>
+      <div class="preview" id="loadInfo"></div>
+      <button type="submit">حفظ</button>
+      <div class="msg" id="loadMsg"></div>
+    </form>
+  </div>`;
+}
+
+function updateLoadInfo() {
+  const f = $('#loadForm'); if (!f) return;
+  const it = findItem(f.item.value);
+  if (!it) return;
+  const main = (reports?.main?.items || []).find(x => x.name === it.name) || { ctn: 0, box: 0 };
+  const st = stockOf(f.rep.value).find(x => x.name === it.name) || { ctn: 0, box: 0 };
+  $('#loadInfo').innerHTML = `المخزن الرئيسي: ${fmt(main.ctn)} ك و${fmt(main.box)} ع<br>مخزن المندوب: ${fmt(st.ctn)} ك و${fmt(st.box)} ع`;
+}
+
+// ============ فاتورة مشتريات (المحاسب) ============
+function lineHtml(i) {
+  const itemOpts = (data.items || []).map(x => `<option value="${esc(x.code)}">${esc(x.name)}</option>`).join('');
+  return `<div class="rec" data-line>
+    <label>الصنف<select data-f="item">${itemOpts}</select></label>
+    <div class="row3">
+      <label>كراتين<input data-f="ctn" type="number" min="0" inputmode="numeric" value="0"></label>
+      <label>علب<input data-f="box" type="number" min="0" inputmode="numeric" value="0"></label>
+      <label>سعر الكرتونة<input data-f="price" type="number" min="0" step="0.5" inputmode="decimal"></label>
+    </div>
+    <button type="button" class="small bad" data-act="delLine">حذف الصنف</button>
+  </div>`;
+}
+
+function pgPurch() {
+  const supOpts = (data.suppliers || []).map(s => `<option value="${esc(s.code)}">${esc(s.name)}</option>`).join('');
+  const mOpts = METHOD_LIST.map(m => `<option>${esc(m)}</option>`).join('');
+  return `<div class="card">
+    <h2>فاتورة مشتريات</h2>
+    <form id="purchForm">
+      <div class="row2">
+        <label>التاريخ<input type="date" name="date" value="${todayStr()}" required></label>
+        <label>رقم الفاتورة<input name="invoice" type="number" min="1" inputmode="numeric" required></label>
+      </div>
+      <label>المورد<select name="sup">${supOpts}</select></label>
+      <div class="row2">
+        <label>طريقة الدفع<select name="method">${mOpts}</select></label>
+        <label>المدفوع (ج.م)<input name="paid" type="number" min="0" step="0.5" inputmode="decimal" value="0"></label>
+      </div>
+      <h3>الأصناف في الفاتورة</h3>
+      <div id="lines">${lineHtml(0)}</div>
+      <button type="button" class="secondary" data-act="addLine">+ إضافة صنف</button>
+      <div style="height:12px"></div>
+      <button type="submit">حفظ فاتورة المشتريات</button>
+      <div class="msg" id="purchMsg"></div>
+      <p class="hint">الكميات بتتضاف مباشرة على المخزن الرئيسي.</p>
+    </form>
+  </div>`;
+}
+
+// ============ تقرير المناديب (المحاسب) ============
+function pgRepReport() {
+  const t = reports?.targets || [];
+  const rows = t.map(x => ({ cells: [
+    esc(x.name), fmt(x.total), x.target ? fmt(x.target) : '—', x.target ? pct(x.pct) : '—',
+    x.target ? fmt(x.remain) : '—', x.target ? fmt(x.perDay) : '—'
+  ]}));
+  return `<div class="card">
+    <h2>تقرير المناديب (شهر ${esc(reports?.month || '')})</h2>
+    ${table(['المندوب', 'المبيعات', 'التارجت', 'النسبة', 'الباقي', 'المطلوب يومياً'], rows)}
+  </div>` + salesItemsHtml();
+}
+
+function salesItemsHtml() {
+  return (reports?.salesByRep || []).map(r => `
+    <div class="card">
+      <h2>${esc(r.name)} — مبيعات كل صنف</h2>
+      ${table(['الصنف', 'كراتين', 'علب', 'القيمة (ج.م)'],
+        r.items.map(i => ({ cells: [esc(i.item), fmt(i.ctn), fmt(i.box), fmt(i.value)] })), { empty: 'مفيش مبيعات' })}
+      <p class="hint">الإجمالي: <b>${fmt(r.total)} ج.م</b></p>
+    </div>`).join('');
+}
+
+// ============ المخازن ============
+function stocksHtml() {
+  return (reports?.stocks || []).map(s => `
+    <div class="card"><h2>مخزن ${esc(s.name)}</h2>
+      ${table(['الصنف', 'كراتين', 'علب'], s.items.map(i => ({ cells: [esc(i.name), `<span class="${negCls(i.ctn)}">${fmt(i.ctn)}</span>`, `<span class="${negCls(i.box)}">${fmt(i.box)}</span>`] })), { empty: 'فاضي' })}
+    </div>`).join('');
+}
+
+function mainHtml() {
+  const m = reports?.main || { items: [], total: 0 };
+  return `<div class="card"><h2>المخزن الرئيسي</h2>
+    ${table(['الصنف', 'كراتين', 'علب', 'القيمة (ج.م)'], m.items.map(i => ({ cells: [esc(i.name), fmt(i.ctn), fmt(i.box), fmt(i.value)] })), { empty: 'فاضي' })}
+    <p class="hint">إجمالي قيمة البضاعة الموجودة: <b>${fmt(m.total)} ج.م</b></p>
+  </div>`;
+}
+
+function pgStores() { return stocksHtml() + mainHtml(); }
+
+// ============ الفواتير (المحاسب) ============
+function pgInvoices() {
+  const repOpts = (data.reps || []).map(r => `<option value="${esc(r.code)}" ${r.code === invRep ? 'selected' : ''}>${esc(r.name)}</option>`).join('');
+  return `<div class="card">
+    <label>المندوب<select data-rerender="invoices" id="invRepSel">${repOpts}</select></label>
+    <div id="invBox"><p class="hint">جاري التحميل...</p></div>
+  </div>`;
+}
+
+async function loadInvoices() {
+  const sel = $('#invRepSel');
+  const code = sel ? sel.value : invRep;
+  invRep = code;
+  if (!code) return;
+  const res = await api('repInvoices', { repCode: code });
+  if (!res.ok) { $('#invBox').innerHTML = `<p class="msg">${esc(res.error)}</p>`; return; }
+  invMap = {};
+  res.invoices.forEach(i => { invMap[i.row] = i; });
+  const lock = data.lockBefore || '';
+  const rows = res.invoices.map(i => {
+    const old = lock && i.date < lock;
+    return `<tr>
+      <td>${esc(i.date)}</td><td>${esc(i.inv)}</td><td class="nm">${esc(i.custName)}</td><td class="nm">${esc(i.itemName)}</td>
+      <td>${fmt(i.ctn)}</td><td>${fmt(i.box)}</td><td>${fmt(i.total)}</td><td>${fmt(i.paid)}</td>
+      <td class="${i.rem > 0 ? 'neg' : ''}">${fmt(i.rem)}</td><td>${esc(i.method)}</td>
+      <td>${old ? '🔒' : `<button class="small secondary" data-act="editInv" data-row="${i.row}">تعديل</button>`}</td></tr>`;
+  }).join('');
+  $('#invBox').innerHTML = `<div class="tw"><table>
+    <thead><tr><th>التاريخ</th><th>فاتورة</th><th>العميل</th><th>الصنف</th><th>ك</th><th>ع</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th>التحصيل</th><th></th></tr></thead>
+    <tbody>${rows || '<tr><td colspan="11" class="hint">مفيش فواتير</td></tr>'}</tbody></table></div>`;
+}
+
+// ============ العملاء (المحاسب) ============
+function pgCustomers() {
+  return `<div class="card">
+    <h2>العملاء المتاحين للمندوب</h2>
+    <label>بحث<input id="custSearch" placeholder="اكتب الكود أو الاسم"></label>
+    <div id="custBox"></div>
+  </div>`;
+}
+
+function drawCustomers() {
+  const box = $('#custBox'); if (!box) return;
+  const q = ($('#custSearch')?.value || '').trim();
+  const list = (data.customers || []).filter(c => !q || c.code.includes(q) || c.name.includes(q));
+  const shown = list.slice(0, 200);
+  box.innerHTML = table(['الكود', 'الاسم', 'متاح للمندوب'], shown.map(c => ({ cells: [
+    esc(c.code), esc(c.name),
+    `<input type="checkbox" data-cust="${esc(c.code)}" ${c.allowed ? 'checked' : ''}>`
+  ]})))
+  + `<p class="hint">عرض ${shown.length} من ${list.length} عميل</p>`;
+}
+
+// ============ الإعدادات (المحاسب) ============
+function pgSettings() {
+  return `<div class="card">
+    <h2>الإعدادات</h2>
+    <label class="check-row"><input type="checkbox" id="priceLock" ${data.priceLocked ? 'checked' : ''}> تثبيت سعر البيع (المندوب ما يقدرش يغيّره)</label>
+    <form id="lockForm">
+      <label>قفل الداتا القديمة: أي فاتورة قبل التاريخ ده مبتتعدلش من التطبيق
+        <input type="date" name="lock" value="${esc(data.lockBefore || '')}">
+      </label>
+      <button type="submit">حفظ تاريخ القفل</button>
+    </form>
+    <div class="msg" id="setMsg"></div>
+  </div>`;
+}
+
+// ============ الشيتات (المحاسب) ============
+function pgSheets() {
+  const opts = (data.sheets || []).map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
+  return `<div class="card">
+    <label>اختار الشيت<select id="viewSel">${opts}</select></label>
+    <div id="viewBox"></div>
+  </div>`;
+}
+
+async function loadSheetView(name) {
+  $('#viewBox').innerHTML = '<p class="hint">جاري التحميل...</p>';
+  const res = await api('sheetView', { name });
+  if (!res.ok) { $('#viewBox').innerHTML = `<p class="msg">${esc(res.error)}</p>`; return; }
+  if (!res.rows.length) { $('#viewBox').innerHTML = '<p class="hint">الشيت ده فاضي</p>'; return; }
+  $('#viewBox').innerHTML = `<div class="tw"><table>${res.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</table></div>`
+    + (res.truncated ? `<p class="hint">بيتعرض أول ${res.rowCount} صف وأول 25 عمود بس.</p>` : '');
+}
+
+// ============ تقارير المشرف ============
+function pgSupSales() { return salesItemsHtml() || '<p class="hint">مفيش بيانات</p>'; }
+function pgSupStock() { return stocksHtml() || '<p class="hint">مفيش بيانات</p>'; }
+
+function pgSupTarget() {
+  const rows = (reports?.targets || []).map(x => ({ cells: [
+    esc(x.name), fmt(x.total), x.target ? fmt(x.target) : '—', x.target ? pct(x.pct) : '—',
+    x.target ? fmt(x.remain) : '—', x.daysLeft, x.target ? fmt(x.perDay) : '—'
+  ]}));
+  return `<div class="card"><h2>التارجت والتوزيع على الأيام</h2>
+    ${table(['المندوب', 'إجمالي البيع', 'التارجت', 'النسبة', 'الباقي', 'الأيام الباقية', 'المطلوب يومياً'], rows)}
+    <p class="hint">المطلوب يومياً = الباقي ÷ الأيام المتبقية في الشهر (شامل النهارده).</p>
+  </div>`;
+}
+
+function pgSupPurch() {
+  const list = reports?.purchaseInvoices || [];
+  const rows = [];
+  list.forEach(inv => inv.lines.forEach(l => rows.push({ cells: [
+    esc(inv.inv), esc(l.date), esc(inv.supName), esc(l.itemName), fmt(l.ctn), fmt(l.box), fmt(l.price), fmt(l.lineTotal)
+  ]})));
+  return `<div class="card"><h2>مشتريات الفرع</h2>
+    ${table(['الفاتورة', 'التاريخ', 'المورد', 'الصنف', 'ك', 'ع', 'سعر الكرتونة', 'القيمة'], rows)}
+    <p class="hint">إجمالي المشتريات: <b>${fmt(reports?.purchaseTotal || 0)} ج.م</b></p>
+  </div>`;
+}
+
+function pgSupMain() { return mainHtml(); }
+
+// ============ أحداث الصفحة ============
+document.addEventListener('click', async e => {
+  const nav = e.target.closest('nav button');
+  if (nav) { go(nav.dataset.p); return; }
+
+  const act = e.target.closest('[data-act]');
+  if (!act) return;
+  const a = act.dataset.act;
+
+  if (a === 'reqHand') {
+    act.disabled = true;
+    const res = await api('requestHandover');
+    if (!res.ok) alert(res.error);
+    await refreshAll();
+  }
+  if (a === 'confirmHand') {
+    act.disabled = true;
+    const res = await api('confirmHandover', { id: act.dataset.id });
+    if (!res.ok) alert(res.error);
+    await refreshAll();
+  }
+  if (a === 'confirmTrans') {
+    const rep = act.dataset.rep;
+    const rows = [...document.querySelectorAll(`input[data-trans="${rep}"]:checked`)].map(c => ({ row: c.dataset.row, inv: c.dataset.inv }));
+    if (!rows.length) { alert('اختار فاتورة واحدة على الأقل'); return; }
+    act.disabled = true;
+    const res = await api('confirmTransfers', { repCode: rep, rows });
+    if (!res.ok) alert(res.error);
+    await refreshAll();
+  }
+  if (a === 'editInv') {
+    const i = invMap[act.dataset.row];
+    if (!i) return;
+    const mOpts = METHOD_LIST.map(m => `<option ${m === i.method ? 'selected' : ''}>${esc(m)}</option>`).join('');
+    $('#modalBody').innerHTML = `
+      <h2>تعديل فاتورة ${esc(i.inv)}</h2>
+      <form id="editForm" data-row="${i.row}" data-inv="${esc(i.inv)}">
+        <div class="row2">
+          <label>التاريخ<input type="date" name="date" value="${esc(i.date)}" required></label>
+          <label>كود العميل<input name="custCode" value="${esc(i.custCode)}" required></label>
+        </div>
+        <label>كود الصنف<input name="itemCode" value="${esc(i.itemCode)}" required></label>
+        <div class="row2">
+          <label>كراتين<input name="cartons" type="number" min="0" value="${i.ctn}"></label>
+          <label>علب<input name="boxes" type="number" min="0" value="${i.box}"></label>
+        </div>
+        <div class="row2">
+          <label>سعر الكرتونة<input name="price" type="number" min="0" step="0.5" value="${i.price}"></label>
+          <label>المدفوع<input name="paid" type="number" min="0" step="0.5" value="${i.paid}"></label>
+        </div>
+        <label>نوع التحصيل<select name="method">${mOpts}</select></label>
+        <button type="submit">حفظ التعديل</button>
+        <button type="button" class="secondary" data-act="closeModal" style="margin-top:8px">إلغاء</button>
+        <div class="msg" id="editMsg"></div>
+      </form>`;
+    $('#modal').classList.remove('hidden');
+  }
+  if (a === 'closeModal') $('#modal').classList.add('hidden');
+  if (a === 'saveCount') await saveCount();
+  if (a === 'addLine') { $('#lines').insertAdjacentHTML('beforeend', lineHtml(0)); }
+  if (a === 'delLine') {
+    const all = document.querySelectorAll('[data-line]');
+    if (all.length > 1) act.closest('[data-line]').remove();
+  }
+});
+
+document.addEventListener('change', async e => {
+  const t = e.target;
+  if (t.id === 'saleForm' || t.closest?.('#saleForm')) { updatePreview(); }
+  if (t.dataset.rerender) {
+    invRep = t.value;
+    if (t.dataset.rerender === 'invoices') { loadInvoices(); return; }
+    render();
+    return;
+  }
+  if (t.dataset.cust) {
+    const res = await api('setCustomer', { custCode: t.dataset.cust, allowed: t.checked });
+    if (!res.ok) { alert(res.error); t.checked = !t.checked; return; }
+    const c = (data.customers || []).find(x => x.code === t.dataset.cust);
+    if (c) c.allowed = t.checked;
+    store.set('data', data);
+  }
+  if (t.id === 'priceLock') {
+    const res = await api('setSetting', { key: 'PRICE_LOCKED', value: t.checked });
+    $('#setMsg').textContent = res.ok ? 'تم الحفظ' : (res.error || 'خطأ');
+    if (!res.ok) t.checked = !t.checked; else { data.priceLocked = t.checked; store.set('data', data); }
+  }
+  if (t.id === 'viewSel') loadSheetView(t.value);
+  if (t.name === 'item' && t.closest('#loadForm')) updateLoadInfo();
+  if (t.closest?.('#loadForm') && (t.name === 'rep' || t.name === 'item')) updateLoadInfo();
+  if (t.name === 'pay' && t.closest?.('#saleForm')) updatePreview();
+});
+
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.closest?.('#saleForm')) updatePreview();
+  if (t.dataset.f && t.dataset.code) updateCountDiff(t.dataset.code);
+  if (t.id === 'custSearch') drawCustomers();
+});
+
+document.addEventListener('submit', async e => {
+  const f = e.target;
+  if (f.id === 'loginForm') return;   // بيتعالج تحت
+  e.preventDefault();
+  if (f.id === 'saleForm') await submitSale(f);
+  if (f.id === 'loadForm') await submitLoad(f);
+  if (f.id === 'purchForm') await submitPurch(f);
+  if (f.id === 'handForm') await submitHand(f);
+  if (f.id === 'lockForm') await submitLock(f);
+  if (f.id === 'editForm') await submitEdit(f);
+});
+
 // ============ الدخول ============
+$('#showPin').addEventListener('change', e => { $('#lpin').type = e.target.checked ? 'text' : 'password'; });
+
 $('#loginForm').addEventListener('submit', async e => {
   e.preventDefault();
   $('#loginMsg').textContent = '';
@@ -378,9 +911,12 @@ $('#loginForm').addEventListener('submit', async e => {
     if (!res.ok) { $('#loginMsg').textContent = 'الكود أو الرقم السري غلط'; return; }
     me = { code: res.code, name: res.name, role: res.role, pin };
     store.set('me', me);
+    data = null; reports = null;
     $('#lpin').value = '';
+    $('#showPin').checked = false; $('#lpin').type = 'password';
+    $('#login').classList.add('hidden');
+    await refreshAll();
     showApp();
-    loadAll();
     syncQueue();
   } catch {
     $('#loginMsg').textContent = 'مفيش اتصال بالنت، حاول تاني';
@@ -388,403 +924,133 @@ $('#loginForm').addEventListener('submit', async e => {
 });
 
 $('#logoutBtn').addEventListener('click', () => {
-  if (queue.some(q => q.status === 'pending')) {
-    alert('فيه فواتير لسه مستنية الإرسال. استنى لحد ما تتبعت.');
-    return;
-  }
+  if (queue.some(q => q.status === 'pending')) { alert('فيه فواتير لسه مستنية الإرسال. استنى لحد ما تتبعت.'); return; }
   showLogin();
 });
 
-// ============ الشاشة الرئيسية ============
-function renderHomeSummary() {
-  const h = data?.home;
-  if (!h) { $('#homeTable').innerHTML = '<p class="hint">مفيش بيانات بعد</p>'; return; }
-  const cell = (v, i) => {
-    if (i === 0) return `<td class="nm">${esc(v)}</td>`;
-    const n = typeof v === 'number' ? v : Number(v);
-    if (typeof v === 'number' || (v !== '' && !isNaN(n))) {
-      const isPct = /نسبة/.test(h.header[i] || '');
-      const txt = isPct ? (n * 100).toFixed(1) + '%' : fmt(n);
-      return `<td class="${n < 0 ? 'neg' : ''}">${txt}</td>`;
-    }
-    return `<td>${esc(v)}</td>`;
-  };
-  $('#homeTable').innerHTML = `<table>
-    <thead><tr>${h.header.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead>
-    <tbody>${h.rows.map(r => `<tr>${r.map((v, i) => cell(v, i)).join('')}</tr>`).join('')}</tbody>
-  </table>`;
-  $('#homeStamp').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG');
-}
-
-// عرض أي شيت من الملف كجدول
-async function renderHome() {
-  if (!data || !me || (me.role !== 'manager' && me.role !== 'accountant')) return;
-  const names = data.sheets || [];
-  const sel = $('#viewSel');
-  const keep = sel.value;
-  sel.innerHTML = names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
-  if (keep && names.includes(keep)) sel.value = keep;
-  if (sel.value) await loadSheetView(sel.value);
-}
-
-async function loadSheetView(name) {
-  $('#viewBox').innerHTML = '<p class="hint">جاري التحميل...</p>';
-  const res = await api('sheetView', { name });
-  if (!res.ok) { $('#viewBox').innerHTML = `<p class="msg">${esc(res.error)}</p>`; return; }
-  if (!res.rows.length) { $('#viewBox').innerHTML = '<p class="hint">الشيت ده فاضي</p>'; return; }
-  $('#viewBox').innerHTML =
-    `<div class="tw"><table>${res.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</table></div>` +
-    (res.truncated ? `<p class="hint">بيتعرض أول ${res.rowCount} صف وأول 25 عمود بس.</p>` : '');
-  $('#homeStamp').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG');
-}
-
-$('#viewSel').addEventListener('change', e => loadSheetView(e.target.value));
-$('#refreshHome').addEventListener('click', loadAll);
-// تحديث دوري للبيانات، ومش بنحدّث وهو بيتكتب فاتورة عشان ما نمسحش الفورم
-setInterval(() => { if (me && page !== 'sell') loadAll(); }, 60000);
-
-// ============ البيع ============
-function currentRepForSale() {
-  if (me.role === 'accountant') return $('#targetRep').value;
-  return me.code;
-}
-
-function renderSell() {
-  if (!data || !me || me.role === 'manager') return;
+// ============ منطق الإرسال للفورمات ============
+async function submitSale(f) {
+  const msg = $('#formMsg'); msg.textContent = '';
+  const cust = findCustByText(f.cust.value);
+  if (!cust) { msg.textContent = 'اختار عميل من القائمة'; return; }
+  const item = findItem(f.item.value);
+  if (!item) { msg.textContent = 'اختار الصنف'; return; }
+  const ctn = num(f.ctn.value), box = num(f.box.value);
+  if (ctn === 0 && box === 0) { msg.textContent = 'اكتب كمية (كراتين أو علب)'; return; }
+  const locked = !!data.priceLocked && me.role !== 'accountant';
+  const price = locked ? item.defaultPrice : num(f.price.value);
+  if (price <= 0) { msg.textContent = 'اكتب سعر الكرتونة'; return; }
+  const pay = PAY.find(p => p.k === f.pay.value) || PAY[0];
+  const paid = pay.credit ? 0 : num(f.paid.value);
   const isAcc = me.role === 'accountant';
-  $('#repWrap').classList.toggle('hidden', !isAcc);
-  if (isAcc) {
-    const prev = $('#targetRep').value;
-    $('#targetRep').innerHTML = (data.reps || []).map(r => `<option value="${esc(r.code)}">${esc(r.name)}</option>`).join('');
-    if (prev) $('#targetRep').value = prev;
-  }
-  const custs = data.customers || [];
-  $('#custList').innerHTML = custs.map(c => `<option value="${esc(c.code)} - ${esc(c.name)}"></option>`).join('');
-  const prevItem = $('#item').value;
-  $('#item').innerHTML = (data.items || []).map(i => `<option value="${esc(i.code)}">${esc(i.name)}</option>`).join('');
-  if (prevItem) $('#item').value = prevItem;
-  const locked = data.priceLocked && me.role === 'rep';
-  $('#price').disabled = locked;
-  $('#priceNote').classList.toggle('hidden', !locked);
-  if (locked) $('#price').value = '';
-  updatePreview();
-}
-
-function findCustomerByText(text) {
-  const t = String(text).trim();
-  return (data?.customers || []).find(c => `${c.code} - ${c.name}` === t || c.code === t || c.name === t) || null;
-}
-
-function findItem(code) {
-  return (data?.items || []).find(i => i.code === code) || null;
-}
-
-function updatePreview() {
-  const it = findItem($('#item').value);
-  const per = it ? it.perCarton : 1;
-  const c = Number($('#cartons').value) || 0;
-  const b = Number($('#boxes').value) || 0;
-  let p = Number($('#price').value) || 0;
-  if (data?.priceLocked && me?.role === 'rep') p = it ? it.defaultPrice : 0;
-  $('#preview').textContent = `الإجمالي: ${fmt(c * p + b * p / per)} ج.م`;
-}
-
-['cartons', 'boxes', 'price', 'item'].forEach(id => $('#' + id).addEventListener('input', updatePreview));
-$('#item').addEventListener('change', updatePreview);
-
-$('#saleForm').addEventListener('submit', e => {
-  e.preventDefault();
-  $('#formMsg').textContent = '';
-  const cust = findCustomerByText($('#cust').value);
-  if (!cust) { $('#formMsg').textContent = 'اختار عميل من القائمة'; return; }
-  const it = findItem($('#item').value);
-  if (!it) { $('#formMsg').textContent = 'اختار الصنف'; return; }
-  const cartons = Number($('#cartons').value) || 0;
-  const boxes = Number($('#boxes').value) || 0;
-  const paid = Number($('#paid').value) || 0;
-  const locked = data.priceLocked && me.role === 'rep';
-  const price = locked ? it.defaultPrice : (Number($('#price').value) || 0);
-  if (!locked && price <= 0) { $('#formMsg').textContent = 'اكتب سعر الكرتونة'; return; }
-  if (cartons === 0 && boxes === 0) { $('#formMsg').textContent = 'اكتب كمية (كراتين أو علب)'; return; }
-  if (me.role === 'accountant' && !$('#targetRep').value) { $('#formMsg').textContent = 'اختار المندوب'; return; }
-
-  const payload = {
-    id: newId(), date: todayStr(),
-    targetRep: me.role === 'accountant' ? $('#targetRep').value : undefined,
-    custCode: cust.code, itemCode: it.code,
-    cartons, boxes, price, paid, method: $('#method').value
-  };
-  const repCode = currentRepForSale();
+  const repCode = isAcc ? f.rep.value : me.code;
   const repName = (data.reps || []).find(r => r.code === repCode)?.name || me.name;
+  const date = isAcc ? f.date.value : todayStr();
+  const total = ctn * price + box * price / item.perCarton;
 
-  queue.unshift({
-    ...payload, targetRep: undefined,
-    repCode,
-    repName,
-    no: 'جديد',
-    customerName: cust.name, itemName: it.name,
-    total: cartons * price + boxes * price / it.perCarton,
-    status: 'pending', error: '', payload
-  });
+  const payload = { id: newId(), date, custCode: cust.code, itemCode: item.code, cartons: ctn, boxes: box, price, paid, method: pay.method };
+  if (isAcc) payload.targetRep = repCode;
+  queue.unshift({ status: 'pending', error: '', at: Date.now(), repCode, repName, custName: cust.name, itemName: item.name,
+                  ctn, box, total, paid, method: pay.method, payload });
   saveQueue();
-  $('#cust').value = ''; $('#cartons').value = '0'; $('#boxes').value = '0';
-  $('#price').value = locked ? '' : ''; $('#paid').value = '0';
+  f.cust.value = ''; f.ctn.value = '0'; f.box.value = '0'; f.paid.value = '0';
+  if (!locked) f.price.value = '';
+  msg.textContent = 'اتحفظت، جاري الإرسال...';
+  $('#queueList').innerHTML = queueHtml();
   updatePreview();
-  renderQueue();
   syncQueue();
-  showPage(me.role === 'rep' ? 'invoices' : 'invoices');
-});
-
-// ============ إرسال المبيعات (مع إعادة المحاولة) ============
-async function syncQueue() {
-  if (syncing || !me || !navigator.onLine) { renderQueue(); updateNet(); return; }
-  syncing = true;
-  try {
-    for (const q of queue.filter(x => x.status === 'pending')) {
-      let res;
-      try {
-        res = await api('sale', { ...q.payload, targetRep: me.role === 'accountant' ? q.repCode : undefined });
-      } catch { break; }   // النت وقع، هنحاول لاحقاً
-      if (res.ok) { q.status = 'synced'; q.error = ''; q.no = res.invoice ? (q.repCode + '-' + res.invoice) : q.no; q.total = res.total ?? q.total; }
-      else if (res.error === 'bad_pin') { showLogin(); break; }
-      else { q.status = 'rejected'; q.error = res.error || 'خطأ'; }
-      saveQueue();
-      renderQueue();
-    }
-    if (queue.some(x => x.status === 'synced')) await loadAll();
-  } finally {
-    syncing = false;
-    renderQueue();
-    updateNet();
-  }
 }
 
-window.addEventListener('online', syncQueue);
-window.addEventListener('offline', updateNet);
-setInterval(syncQueue, 30000);
-
-function badge(q) {
-  if (q.status === 'pending') return '⏳ مستنية الإرسال';
-  if (q.status === 'synced') return '🔒 اتسجلت ومقفولة';
-  return '⚠ اترفضت: ' + esc(q.error);
+async function saveCount() {
+  const repCode = $('[data-rerender="count"]').value;
+  const items = [];
+  (data.items || []).forEach(it => {
+    const c = document.querySelector(`input[data-code="${it.code}"][data-f="ctn"]`);
+    const b = document.querySelector(`input[data-code="${it.code}"][data-f="box"]`);
+    if ((c && c.value !== '') || (b && b.value !== '')) items.push({ code: it.code, ctn: num(c?.value), box: num(b?.value) });
+  });
+  if (!items.length) { $('#countMsg').textContent = 'اكتب الجرد لصنف واحد على الأقل'; return; }
+  const res = await api('saveCount', { repCode, items });
+  if (!res.ok) { $('#countMsg').textContent = res.error; return; }
+  $('#countMsg').textContent = 'تم حفظ الجرد';
+  $('#countResult').innerHTML = table(['الصنف', 'المتاح ك', 'المتاح ع', 'الجرد ك', 'الجرد ع', 'فرق ك', 'فرق ع'],
+    res.results.map(r => ({ cells: [esc(r.name), fmt(r.stockCtn), fmt(r.stockBox), fmt(r.countCtn), fmt(r.countBox),
+      `<span class="${r.diffCtn < 0 ? 'neg' : (r.diffCtn > 0 ? 'pos' : '')}">${fmt(r.diffCtn)}</span>`,
+      `<span class="${r.diffBox < 0 ? 'neg' : (r.diffBox > 0 ? 'pos' : '')}">${fmt(r.diffBox)}</span>`] })));
+  await refreshAll();
 }
 
-function renderQueue() {
-  if (!me) return;
-  const mine = queue.filter(q => me.role === 'accountant' ? true : q.repCode === me.code).filter(q => q.status !== 'synced').slice(0, 30);
-  $('#queueList').innerHTML = mine.length ? mine.map(q => `
-    <div class="rec ${q.status}">
-      <div class="top"><span>${esc(q.repName)}</span><span class="badge">${badge(q)}</span></div>
-      <div>${esc(q.customerName)} — ${esc(q.itemName)}</div>
-      <div class="meta">${q.payload.cartons} ك + ${q.payload.boxes} ع · ${fmt(q.total)} ج.م · مدفوع ${fmt(q.payload.paid)} · ${esc(q.payload.method)}</div>
-    </div>`).join('') : '';
-  updateNet();
+function updateCountDiff(code) {
+  const it = findItem(code);
+  if (!it) return;
+  const repCode = $('[data-rerender="count"]').value;
+  const st = stockOf(repCode).find(s => s.name === it.name) || { ctn: 0, box: 0 };
+  const c = document.querySelector(`input[data-code="${code}"][data-f="ctn"]`);
+  const b = document.querySelector(`input[data-code="${code}"][data-f="box"]`);
+  if (!c || !b) return;
+  const dc = num(c.value) - st.ctn, db = num(b.value) - st.box;
+  const cell = document.querySelector(`[data-diff="${code}"]`);
+  if (c.value === '' && b.value === '') { cell.textContent = '—'; return; }
+  const txt = `ك ${fmt(dc)} · ع ${fmt(db)}`;
+  cell.innerHTML = `<span class="${(dc < 0 || db < 0) ? 'neg' : ((dc > 0 || db > 0) ? 'pos' : '')}">${txt}</span>`;
 }
 
-function updateNet() {
-  const n = queue.filter(q => q.status === 'pending').length;
-  $('#netState').textContent = (navigator.onLine ? '🟢' : '🔴 بدون نت') + (n ? ` · ${n} مستنية` : '');
+async function submitLoad(f) {
+  const msg = $('#loadMsg'); msg.textContent = '';
+  const res = await api('addLoad', {
+    repCode: f.rep.value, type: f.type.value, date: f.date.value, itemCode: f.item.value,
+    cartons: num(f.ctn.value), boxes: num(f.box.value), note: f.note.value
+  });
+  msg.textContent = res.ok ? 'تم الحفظ' : (res.error || 'خطأ');
+  if (res.ok) { f.ctn.value = '0'; f.box.value = '0'; f.note.value = ''; await refreshAll(); }
 }
 
-// ============ المخزن (المندوب) ============
-function renderStock() {
-  if (me?.role !== 'rep' || !data) return;
-  const rows = (data.stock || []).map(s => `
-    <tr><td class="nm">${esc(s.name)}</td>
-    <td class="${s.ctn < 0 ? 'neg' : ''}">${fmt(s.ctn)}</td>
-    <td class="${s.box < 0 ? 'neg' : ''}">${fmt(s.box)}</td></tr>`).join('');
-  $('#stockBody').innerHTML = rows || '<tr><td colspan="3" class="hint">مفيش بضاعة في السيارة</td></tr>';
+async function submitPurch(f) {
+  const msg = $('#purchMsg'); msg.textContent = '';
+  const lines = [...document.querySelectorAll('[data-line]')].map(l => ({
+    itemCode: l.querySelector('[data-f="item"]').value,
+    ctn: num(l.querySelector('[data-f="ctn"]').value),
+    box: num(l.querySelector('[data-f="box"]').value),
+    price: num(l.querySelector('[data-f="price"]').value)
+  }));
+  if (lines.some(l => l.price <= 0 && (l.ctn > 0 || l.box > 0))) { msg.textContent = 'اكتب سعر الكرتونة لكل صنف'; return; }
+  const res = await api('addPurchase', {
+    date: f.date.value, invoice: f.invoice.value, supCode: f.sup.value,
+    method: f.method.value, paid: num(f.paid.value), lines
+  });
+  msg.textContent = res.ok ? `تم حفظ فاتورة ${res.invoice}` : (res.error || 'خطأ');
+  if (res.ok) { f.invoice.value = ''; f.paid.value = '0'; await refreshAll(); }
 }
 
-// ============ الفواتير ============
-function renderInvoices() {
-  if (!me || !data) return;
-  const isAcc = me.role === 'accountant';
-  $('#repPick').classList.toggle('hidden', !isAcc);
-  if (isAcc) {
-    const prev = $('#invRep').value;
-    $('#invRep').innerHTML = (data.reps || []).map(r => `<option value="${esc(r.code)}">${esc(r.name)}</option>`).join('');
-    if (prev) $('#invRep').value = prev;
-    $('#invTitle').textContent = 'فواتير المندوب';
-    loadRepInvoices($('#invRep').value);
-  } else {
-    $('#invTitle').textContent = 'فواتيري';
-    drawInvoices(data.invoices || [], false);
-  }
+async function submitHand(f) {
+  const res = await api('addHandover', { repCode: f.rep.value, amount: num(f.amount.value), note: f.note.value });
+  $('#handMsg').textContent = res.ok ? 'تم التسجيل' : (res.error || 'خطأ');
+  if (res.ok) await refreshAll();
 }
 
-async function loadRepInvoices(code) {
-  if (!code) return;
-  const res = await api('repInvoices', { repCode: code });
-  if (res.ok) drawInvoices(res.invoices, true);
+async function submitLock(f) {
+  const res = await api('setSetting', { key: 'LOCK_BEFORE', value: f.lock.value });
+  $('#setMsg').textContent = res.ok ? 'تم حفظ تاريخ القفل' : (res.error || 'خطأ');
+  if (res.ok) await refreshAll();
 }
 
-function drawInvoices(list, editable) {
-  invMap = {};
-  list.forEach(i => { invMap[i.row] = i; });
-  $('#invTable').classList.toggle('hidden', list.length === 0);
-  $('#invBody').innerHTML = list.map(i => `
-    <tr>
-      <td>${esc(i.date)}</td><td>${esc(i.inv)}</td>
-      <td class="nm">${esc(i.custName)}</td><td class="nm">${esc(i.itemName)}</td>
-      <td>${fmt(i.ctn)}</td><td>${fmt(i.box)}</td>
-      <td>${fmt(i.total)}</td><td>${fmt(i.paid)}</td>
-      <td class="${i.rem > 0 ? 'neg' : ''}">${fmt(i.rem)}</td>
-      <td>${esc(i.method)}</td>
-      <td>${editable ? `<button class="small secondary" data-edit="${i.row}">تعديل</button>` : '🔒'}</td>
-    </tr>`).join('') || '';
-  if (!list.length) $('#invBody').innerHTML = '<tr><td colspan="11" class="hint">مفيش فواتير</td></tr>';
-}
-
-$('#invRep').addEventListener('change', () => loadRepInvoices($('#invRep').value));
-
-// ============ تعديل فاتورة (المحاسب) ============
-$('#invBody').addEventListener('click', e => {
-  const btn = e.target.closest('[data-edit]');
-  if (!btn) return;
-  const i = invMap[btn.dataset.edit];
-  if (!i) return;
-  $('#eDate').value = i.date;
-  $('#eCust').value = i.custCode;
-  $('#eItem').value = i.itemCode;
-  $('#eCtn').value = i.ctn;
-  $('#eBox').value = i.box;
-  $('#ePrice').value = i.price;
-  $('#ePaid').value = i.paid;
-  $('#eMethod').value = i.method;
-  $('#editForm').dataset.row = i.row;
-  $('#editForm').dataset.inv = i.inv;
-  $('#eMsg').textContent = '';
-  $('#modal').classList.remove('hidden');
-});
-
-$('#eCancel').addEventListener('click', () => $('#modal').classList.add('hidden'));
-
-$('#editForm').addEventListener('submit', async e => {
-  e.preventDefault();
+async function submitEdit(f) {
   const res = await api('editSale', {
-    repCode: $('#invRep').value,
-    row: Number($('#editForm').dataset.row),
-    invoice: $('#editForm').dataset.inv,
+    repCode: invRep, row: Number(f.dataset.row), invoice: f.dataset.inv,
     fields: {
-      date: $('#eDate').value, custCode: $('#eCust').value.trim(), itemCode: $('#eItem').value.trim(),
-      cartons: Number($('#eCtn').value) || 0, boxes: Number($('#eBox').value) || 0,
-      price: Number($('#ePrice').value) || 0, paid: Number($('#ePaid').value) || 0,
-      method: $('#eMethod').value
+      date: f.date.value, custCode: f.custCode.value.trim(), itemCode: f.itemCode.value.trim(),
+      cartons: num(f.cartons.value), boxes: num(f.boxes.value), price: num(f.price.value),
+      paid: num(f.paid.value), method: f.method.value
     }
   });
-  if (res.ok) {
-    $('#modal').classList.add('hidden');
-    loadRepInvoices($('#invRep').value);
-    loadAll();
-  } else {
-    $('#eMsg').textContent = res.error === 'changed' ? 'الفاتورة اتغيرت، حدّث الصفحة' : (res.error || 'خطأ');
-  }
-});
-
-// ============ الكاش ============
-function renderCash() {
-  if (!me || !data) return;
-  const isAcc = me.role === 'accountant';
-  $('#repCash').classList.toggle('hidden', isAcc);
-  $('#accCash').classList.toggle('hidden', !isAcc);
-  if (!isAcc) {
-    const c = data.cash || { total: 0, confirmed: 0, due: 0, request: null };
-    $('#cTotal').textContent = fmt(c.total);
-    $('#cConf').textContent = fmt(c.confirmed);
-    $('#cDue').textContent = fmt(c.due);
-    if (c.request) {
-      $('#cReqBox').innerHTML = `<div class="rec pending">طلب التسليم بمبلغ <b>${fmt(c.request.amount)} ج.م</b> مستني تأكيد المحاسب.</div>`;
-    } else {
-      $('#cReqBox').innerHTML = `<button id="reqHand" ${c.due <= 0 ? 'disabled' : ''}>سلّمت الكاش — اطلب التأكيد</button>`;
-    }
-    return;
-  }
-  // المحاسب
-  $('#openReqs').innerHTML = (data.openRequests || []).length
-    ? data.openRequests.map(r => `
-        <div class="rec pending">
-          <div class="top"><span>${esc(r.repName)}</span><span class="badge">${fmt(r.request.amount)} ج.م</span></div>
-          <div class="meta">طلب بتاريخ ${esc(r.request.date)}</div>
-          <button class="small" data-confirm="${esc(r.request.id)}">تأكيد الاستلام</button>
-        </div>`).join('')
-    : '<p class="hint">مفيش طلبات تسليم مستنية</p>';
-  $('#repDueBody').innerHTML = (data.reps || []).map(r => `
-    <tr><td class="nm">${esc(r.name)}</td><td class="${r.due > 0 ? 'neg' : ''}">${fmt(r.due)}</td><td>${r.request ? 'مستني تأكيد' : '—'}</td></tr>`).join('');
-  const sel = (data.reps || []).map(r => `<option value="${esc(r.code)}">${esc(r.name)}</option>`).join('');
-  $('#hRep').innerHTML = sel;
+  if (res.ok) { $('#modal').classList.add('hidden'); await refreshAll(); }
+  else $('#editMsg').textContent = res.error === 'changed' ? 'الفاتورة اتغيرت، حدّث الصفحة' : (res.error || 'خطأ');
 }
-
-$('#repCash').addEventListener('click', async e => {
-  if (e.target.id !== 'reqHand') return;
-  e.target.disabled = true;
-  const res = await api('requestHandover');
-  if (!res.ok) alert(res.error);
-  await loadAll();
-});
-
-$('#accCash').addEventListener('click', async e => {
-  const b = e.target.closest('[data-confirm]');
-  if (!b) return;
-  b.disabled = true;
-  const res = await api('confirmHandover', { id: b.dataset.confirm });
-  if (!res.ok) alert(res.error);
-  await loadAll();
-});
-
-$('#handForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const res = await api('addHandover', { repCode: $('#hRep').value, amount: Number($('#hAmount').value) || 0, note: $('#hNote').value });
-  $('#hMsg').textContent = res.ok ? 'تم التسجيل' : (res.error || 'خطأ');
-  if (res.ok) { $('#hAmount').value = ''; $('#hNote').value = ''; loadAll(); }
-});
-
-// ============ العملاء (المحاسب) ============
-function renderCustomers() {
-  if (me?.role !== 'accountant' || !data) return;
-  drawCustomers();
-}
-
-function drawCustomers() {
-  const q = $('#custSearch').value.trim();
-  const list = (data.customers || []).filter(c => !q || c.code.includes(q) || c.name.includes(q));
-  const shown = list.slice(0, 200);
-  $('#custBody').innerHTML = shown.map(c => `
-    <tr><td>${esc(c.code)}</td><td class="nm">${esc(c.name)}</td>
-    <td><input type="checkbox" data-cust="${esc(c.code)}" ${c.allowed ? 'checked' : ''} style="width:22px;height:22px;min-height:0"></td></tr>`).join('');
-  $('#custCount').textContent = `عرض ${shown.length} من ${list.length} عميل`;
-}
-
-$('#custSearch').addEventListener('input', drawCustomers);
-
-$('#custBody').addEventListener('change', async e => {
-  const cb = e.target.closest('[data-cust]');
-  if (!cb) return;
-  const res = await api('setCustomer', { custCode: cb.dataset.cust, allowed: cb.checked });
-  if (!res.ok) { alert(res.error); cb.checked = !cb.checked; return; }
-  const c = (data.customers || []).find(x => x.code === cb.dataset.cust);
-  if (c) c.allowed = cb.checked;
-  store.set('data', data);
-});
-
-// ============ الإعدادات (المحاسب) ============
-function renderSettings() {
-  if (me?.role !== 'accountant' || !data) return;
-  $('#priceLock').checked = !!data.priceLocked;
-}
-
-$('#priceLock').addEventListener('change', async e => {
-  const res = await api('setPriceLock', { locked: e.target.checked });
-  $('#setMsg').textContent = res.ok ? 'تم الحفظ' : (res.error || 'خطأ');
-  if (res.ok) { data.priceLocked = e.target.checked; store.set('data', data); }
-  else e.target.checked = !e.target.checked;
-});
 
 // ============ بدء التشغيل ============
 if (me) {
   showApp();
-  loadAll();
-  syncQueue();
+  refreshAll().then(() => syncQueue());
 } else {
   $('#login').classList.remove('hidden');
 }

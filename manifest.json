@@ -1,15 +1,17 @@
 {
-  "name": "إدارة المبيعات",
-  "short_name": "المبيعات",
-  "start_url": "./index.html",
+  "name": "شركة المهندس",
+  "short_name": "المهندس",
+  "description": "المبيعات والمخزن والكاش لشركة المهندس",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "lang": "ar",
-  "dir": "rtl",
-  "background_color": "#f4f6f8",
+  "background_color": "#f2f5f7",
   "theme_color": "#0f766e",
   "icons": [
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable" }
   ]
 }

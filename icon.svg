@@ -1,7 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#0f766e"/>
-  <rect x="120" y="150" width="272" height="230" rx="28" fill="#ffffff"/>
-  <rect x="150" y="190" width="212" height="22" rx="11" fill="#0f766e"/>
-  <rect x="150" y="235" width="150" height="22" rx="11" fill="#99d5cf"/>
-  <rect x="150" y="280" width="180" height="22" rx="11" fill="#99d5cf"/>
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="256" cy="256" r="256" fill="#ffffff"/>
+  <circle cx="256" cy="256" r="226" fill="#0f766e"/>
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#ffffff" stroke-width="8"/>
+  <rect x="186" y="120" width="140" height="170" rx="16" fill="#ffffff"/>
+  <rect x="210" y="158" width="92" height="14" rx="7" fill="#0f766e"/>
+  <rect x="210" y="190" width="70" height="14" rx="7" fill="#7dd3c7"/>
+  <rect x="210" y="222" width="82" height="14" rx="7" fill="#7dd3c7"/>
+  <circle cx="352" cy="170" r="34" fill="#f59e0b"/>
+  <text x="352" y="182" font-size="38" font-weight="bold" text-anchor="middle" fill="#ffffff" font-family="Tahoma, Arial, sans-serif">ج</text>
+  <text x="256" y="350" font-size="62" font-weight="bold" text-anchor="middle" fill="#ffffff" font-family="Tahoma, Arial, sans-serif">المهندس</text>
+  <text x="256" y="405" font-size="30" text-anchor="middle" fill="#ccfbf1" font-family="Tahoma, Arial, sans-serif">شركة</text>
 </svg>

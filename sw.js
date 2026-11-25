@@ -1,31 +1,27 @@
-// غيّر رقم النسخة (v2, v3 ...) كل ما تعدّل الملفات عشان الموبايلات تحمّل الجديد
-const CACHE = 'sales-app-v3';
-const SHELL = ['./', './index.html', './manifest.json', './icon.svg'];
+const CACHE = 'sales-app-v4';
+const FILES = ['./', 'index.html', 'manifest.json', 'icon.svg'];
 
-self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil(
+self.addEventListener('activate', e => {
+  e.waitUntil(
     caches.keys()
       .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
 
-// ملفات الموقع من الكاش، وطلبات Apps Script (دومين تاني) مش بتتدخل هنا خالص
-self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-  if (event.request.method !== 'GET' || url.origin !== self.location.origin) return;
-  event.respondWith(
-    caches.match(event.request).then(hit => {
-      if (hit) return hit;
-      return fetch(event.request).then(res => {
-        const copy = res.clone();
-        caches.open(CACHE).then(c => c.put(event.request, copy));
-        return res;
-      }).catch(() => caches.match('./index.html'));
-    })
+self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  // طلبات Apps Script (من دومين تاني) مش بنخزنها أبداً
+  if (url.origin !== self.location.origin) return;
+  e.respondWith(
+    caches.match(e.request).then(hit => hit || fetch(e.request).then(res => {
+      const copy = res.clone();
+      caches.open(CACHE).then(c => c.put(e.request, copy));
+      return res;
+    }))
   );
 });

@@ -109,7 +109,7 @@
 <script>
 // ============ الإعدادات ============
 // حط هنا لينك Apps Script (Web app URL)
-const API_URL = 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwwnp6_NUtDrueaBXglVEDlXl0p0nsRlDeuYZcJMJlYblccA62yvhdxR4pZN9LJzOyM/exec';
 
 // ============ أدوات ============
 const $ = s => document.querySelector(s);
@@ -176,7 +176,9 @@ async function api(action, body = {}) {
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action, code: me?.code, pin: me?.pin, ...body })
   });
-  return r.json();
+  const txt = await r.text();
+  try { return JSON.parse(txt); }
+  catch { throw new Error('السيرفر رد برد مش مفهوم (ممكن timeout): ' + txt.replace(/\s+/g, ' ').slice(0, 120)); }
 }
 
 function table(head, rows, opts = {}) {
